@@ -1,0 +1,8 @@
+{
+  "name": "settle-up-v2",
+  "app_id": "233b1ad0",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
