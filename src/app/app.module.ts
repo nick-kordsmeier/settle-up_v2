@@ -19,6 +19,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import * as firebase from 'firebase'
 
 import { AuthProvider } from '../providers/auth/auth';
+import { SettleUpDbProvider } from '../providers/settle-up-db/settle-up-db';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { AuthProvider } from '../providers/auth/auth';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
+    AuthProvider,
+    SettleUpDbProvider
   ]
 })
 export class AppModule {}

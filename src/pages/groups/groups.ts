@@ -12,7 +12,7 @@ export class GroupsPage {
   constructor(public navCtrl: NavController) {
 
   }
-
+ 
   goToNewGroup() {
     console.log('New Group');
     this.navCtrl.push(NewGroupPage);

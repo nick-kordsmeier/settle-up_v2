@@ -72,15 +72,7 @@ public loading: Loading;
    }
 
    signInWithFacebook() {
-     this.authProvider.signInWithFacebook()
-     .then( authData => {
-       console.log(authData);
-      this.loading.dismiss().then( () => {
-        this.navCtrl.setRoot(TabsPage);
-      });
-    });
-    this.loading = this.loadingCtrl.create();
-    this.loading.present();
+     this.authProvider.signInWithFacebook();
    }
 
 }

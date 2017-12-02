@@ -3,7 +3,7 @@
   <ion-navbar>
     <ion-title>Create New Group</ion-title>
     <ion-buttons right>
-    <button ion-button clear (click)='saveNewGroup()'>Save</button>
+    <button ion-button clear (click)='onSaveNewGroup()'>Save</button>
   </ion-buttons>
   </ion-navbar>
 
@@ -13,5 +13,19 @@
 
 
 <ion-content padding>
-
+    <form (ngSubmit)="onSaveNewGroup()">
+    <ion-item>
+      <ion-label stacked>New Group Name</ion-label>
+      <ion-input type="text" [(ngModel)]="newGroupName" name="newGroupName"></ion-input>      
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>Description:</ion-label>
+        <ion-textarea type="text" [(ngModel)]="newGroupDescription" name="newGroupDescription" placeholder="(optional)"></ion-textarea>      
+    </ion-item>
+  </form>
 </ion-content>
+
+
+
+<!--<button ion-button type="submit" clear small>Submit</button>          
+<button ion-button clear small (tap)="onReset()">Reset</button> -->

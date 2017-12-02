@@ -41,13 +41,15 @@ export class MyApp {
   }
 
   ngOnInit()	{
-  firebase.auth().onAuthStateChanged( user => {
+    firebase.auth().onAuthStateChanged( user => {
       if (!user) {
         console.log('No user found');
         this.rootPage = LoginPage;
+        console.log(this.authProvider.loggedInWithProvider);
       } else { 
-        console.log(user.email);      
         this.rootPage = TabsPage;
+        this.authProvider.getUserInfo(user.uid);
+        console.log(this.authProvider.loggedInWithProvider);        
       }
     });
   }

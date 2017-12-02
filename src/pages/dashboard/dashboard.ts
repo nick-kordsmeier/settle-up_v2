@@ -11,12 +11,14 @@ import { LoginPage } from '../login/login';
 export class DashboardPage {
 
   constructor(public navCtrl: NavController, public authProvider: AuthProvider) {
+  }
 
+  ionViewDidLoad()	{
+    if ( this.authProvider.loggedInWithProvider ) this.authProvider.checkRedirect();
   }
 
   logout() {
     this.authProvider.logoutUser();
-    //this.rootPage = 'login';    
     this.navCtrl.setRoot(LoginPage);
   }
 
