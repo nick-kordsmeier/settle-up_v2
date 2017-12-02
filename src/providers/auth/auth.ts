@@ -3,9 +3,7 @@ import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthProvider {
-userInfo;
-loggedInWithProvider: boolean = false;
-
+userInfo: Object;
   constructor() {
    }
 
@@ -14,8 +12,11 @@ loggedInWithProvider: boolean = false;
       this.userInfo = snapshot.val();
     });
   }
-  
 
+  getUID() {
+    return firebase.auth().currentUser.uid;
+  }
+ 
   loginUser(email: string, password: string) {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   }
@@ -25,10 +26,12 @@ loggedInWithProvider: boolean = false;
       newUser => {
       firebase.auth().currentUser.updateProfile({ displayName: firstName + " " + lastName, photoURL: null })
       firebase.database().ref('/userProfile').child(newUser.uid).set({
+        uid: newUser.uid,
         email: email,
         firstName: firstName,
         lastName: lastName,
-        photoURL: null
+        displayName: firstName + " " + lastName,
+        photoURL: null,
       });
     })
   }
@@ -55,7 +58,7 @@ loggedInWithProvider: boolean = false;
           email: result.user.email,
           firstName: displayName[0],
           lastName: displayName[1],
-          photoURL: result.user.photoURL 
+          photoURL: result.user.photoURL,
         });
       } else {
         console.log("This is not user's first login.")

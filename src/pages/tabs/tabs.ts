@@ -17,6 +17,14 @@ export class TabsPage {
   tab3Root = PurchasesPage;
 
   constructor(public authProvider: AuthProvider) {
+  }
 
+  ionViewDidEnter() {
+    //this.authProvider.getUserInfo(this.authProvider.getUID());
+    
+  }
+
+  ionViewCanLeave() {
+    //this.authProvider.newUserToFalse();
   }
 }

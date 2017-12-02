@@ -1,15 +1,33 @@
 import { Injectable } from '@angular/core';
-import * as firebase from 'firebase'
 
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable'
 
 @Injectable()
 export class SettleUpDbProvider {
+  groupsRef: AngularFireList<any>;
+  usersRef: AngularFireList<any>;
 
-  constructor() {  }
 
-  pushNewGroup(newGroupObject: object) {
-    let newGroupKey = firebase.database().ref('/Groups').push().key;
-    firebase.database().ref('/Groups').child(newGroupKey).set(newGroupObject);
+  constructor(
+    public afDatabase: AngularFireDatabase
+  ) {
+    this.groupsRef = afDatabase.list("/Groups");
+    this.usersRef = afDatabase.list("/userProfile");
+    }
+  
+
+  pushNewGroup(newGroupObject: object): void {
+    const newGroupRef = this.groupsRef.push({});
+    newGroupRef.set(newGroupObject);
   }
 
+  getUserData(uid) {
+    return new Promise (resolve => {this.afDatabase.object("/userProfile/" + uid).valueChanges().subscribe(data => {
+      resolve(data);
+    });
+  })
+  
+ 
+}
 }

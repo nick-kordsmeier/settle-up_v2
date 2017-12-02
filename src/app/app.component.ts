@@ -38,21 +38,23 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
-  }
 
-  ngOnInit()	{
     firebase.auth().onAuthStateChanged( user => {
       if (!user) {
         console.log('No user found');
         this.rootPage = LoginPage;
-        console.log(this.authProvider.loggedInWithProvider);
+        //console.log(this.authProvider.loggedInWithProvider);
       } else { 
         this.rootPage = TabsPage;
-        this.authProvider.getUserInfo(user.uid);
-        console.log(this.authProvider.loggedInWithProvider);        
+        //console.log(this.authProvider.loggedInWithProvider);
       }
     });
   }
+
+  ionViewDidEnter() {
+
+  }
+ }
   
   // logoutUser() {
   //   this.authProvider.logoutUser();
@@ -60,4 +62,3 @@ export class MyApp {
   //   //this.nav.setRoot(LoginPage);
   // }
 
-}

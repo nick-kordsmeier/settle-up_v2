@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
+//import { NguUtilityModule } from '../../node_modules/ngu-utility/ngu-utility.module'
+
 import { GroupsPage } from '../pages/groups/groups';
 import { PurchasesPage } from '../pages/purchases/purchases';
 import { DashboardPage } from '../pages/dashboard/dashboard';
@@ -16,10 +18,23 @@ import { NewPurchasePage } from '../pages/new-purchase/new-purchase';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import * as firebase from 'firebase'
+//import * as firebase from 'firebase'
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database'
+
+export const angularFirebaseConfig = {
+  apiKey: 'AIzaSyB5E19ipP5QgggHWrzfJi46wSqu4x2DXDY',
+  authDomain: 'settle-up-b921a.firebaseapp.com',
+  databaseURL: 'https://settle-up-b921a.firebaseio.com',
+  projectId: 'settle-up-b921a',
+  storageBucket: 'settle-up-b921a.appspot.com',
+  messagingSenderId: '518509991002'
+};
 
 import { AuthProvider } from '../providers/auth/auth';
 import { SettleUpDbProvider } from '../providers/settle-up-db/settle-up-db';
+import { AddMoreMembersModalComponent } from '../components/add-more-members-modal/add-more-members-modal';
 
 @NgModule({
   declarations: [
@@ -32,11 +47,15 @@ import { SettleUpDbProvider } from '../providers/settle-up-db/settle-up-db';
     SignupPage,
     ResetPasswordPage,
     NewGroupPage,
-    NewPurchasePage
+    NewPurchasePage,
+    AddMoreMembersModalComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(angularFirebaseConfig),
+    AngularFireDatabaseModule,
+    //NguUtilityModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -49,7 +68,8 @@ import { SettleUpDbProvider } from '../providers/settle-up-db/settle-up-db';
     SignupPage,
     ResetPasswordPage,
     NewGroupPage,
-    NewPurchasePage
+    NewPurchasePage,
+    AddMoreMembersModalComponent
   ],
   providers: [
     StatusBar,

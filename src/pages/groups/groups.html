@@ -8,4 +8,13 @@
 
 <ion-content padding>
 <button ion-button (click)="goToNewGroup()">Create New Group</button>
+
+<ion-list *ngFor="let group of groups | async">
+  <ion-card>
+    <ion-card-header>
+      {{group?.groupName}}
+    </ion-card-header>
+  </ion-card>
+</ion-list>
+
 </ion-content>

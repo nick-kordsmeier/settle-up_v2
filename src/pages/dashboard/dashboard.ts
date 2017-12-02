@@ -14,7 +14,12 @@ export class DashboardPage {
   }
 
   ionViewDidLoad()	{
-    if ( this.authProvider.loggedInWithProvider ) this.authProvider.checkRedirect();
+    // let uid = this.authProvider.getUID();
+    // console.log(uid);
+
+      //if ( this.authProvider.userInfo.newUser ) this.authProvider.checkRedirect();
+      //else console.log("Not new user");      
+
   }
 
   logout() {

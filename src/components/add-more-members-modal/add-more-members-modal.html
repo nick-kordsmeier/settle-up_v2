@@ -1,0 +1,28 @@
+<ion-header>
+    
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Close</button>
+    </ion-buttons>
+    <ion-title>Search for Members</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar>
+      <ion-searchbar (ionInput)="getUsers($event)"></ion-searchbar>
+  </ion-toolbar>
+    
+</ion-header>
+
+<ion-content padding>
+
+    <ion-list *ngFor="let displayName of displayNames">
+        <ion-card>
+          <ion-card-header>
+            {{displayName}}
+          </ion-card-header>
+        </ion-card>
+      </ion-list>
+      
+
+  
+  </ion-content>
