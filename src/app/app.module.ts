@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-//import { NguUtilityModule } from '../../node_modules/ngu-utility/ngu-utility.module'
+import { NguUtilityModule } from '../../node_modules/ngu-utility/ngu-utility.module'
 
 import { GroupsPage } from '../pages/groups/groups';
 import { PurchasesPage } from '../pages/purchases/purchases';
@@ -17,8 +17,6 @@ import { NewPurchasePage } from '../pages/new-purchase/new-purchase';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-//import * as firebase from 'firebase'
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database'
@@ -55,7 +53,7 @@ import { AddMoreMembersModalComponent } from '../components/add-more-members-mod
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(angularFirebaseConfig),
     AngularFireDatabaseModule,
-    //NguUtilityModule
+    NguUtilityModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
