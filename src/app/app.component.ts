@@ -8,6 +8,7 @@ import * as firebase from 'firebase'
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { AuthProvider } from '../providers/auth/auth';
+import { SettleUpDbProvider } from '../providers/settle-up-db/settle-up-db';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,23 +16,38 @@ import { AuthProvider } from '../providers/auth/auth';
 export class MyApp {
   // @ViewChild('content') nav: NavController
   rootPage: any;
-  firebaseConfig = {
-    apiKey: 'AIzaSyB5E19ipP5QgggHWrzfJi46wSqu4x2DXDY',
-    authDomain: 'settle-up-b921a.firebaseapp.com',
-    databaseURL: 'https://settle-up-b921a.firebaseio.com',
-    projectId: 'settle-up-b921a',
-    storageBucket: 'settle-up-b921a.appspot.com',
-    messagingSenderId: '518509991002'
-  };
 
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public authProvider: AuthProvider
+    private authProvider: AuthProvider,
+    private settleUpProvider: SettleUpDbProvider
   ) {
-    firebase.initializeApp(this.firebaseConfig);
+
+    firebase.auth().getRedirectResult().then( result => {
+      if (result.credential) {
+        console.log("success")
+        this.settleUpProvider.getUserData(result.user.uid).then( userData => {
+          if (!userData) {
+            let userId = result.user.uid;
+            let splitName = result.user.displayName.split(" ");
+            firebase.database().ref('/userProfile').child(userId).set({
+              email: result.user.email,
+              displayName: result.user.displayName,
+              firstName: splitName[0],
+              lastName: splitName[1],
+              photoURL: result.user.photoURL,
+            });
+            console.log("New FB user logged to database.");
+          } else { console.log("This user already exists.")}
+        })
+      } else {
+        console.log("User was already logged in.")
+      }
+    });
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -43,10 +59,8 @@ export class MyApp {
       if (!user) {
         console.log('No user found');
         this.rootPage = LoginPage;
-        //console.log(this.authProvider.loggedInWithProvider);
       } else { 
         this.rootPage = TabsPage;
-        //console.log(this.authProvider.loggedInWithProvider);
       }
     });
   }

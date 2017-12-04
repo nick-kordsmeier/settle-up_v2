@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ViewController } from 'ionic-angular';
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
 
 import { Observable } from 'rxjs/Observable';
@@ -7,35 +8,48 @@ import { Observable } from 'rxjs/Observable';
   selector: 'add-more-members-modal',
   templateUrl: 'add-more-members-modal.html'
 })
-export class AddMoreMembersModalComponent {
-users;
-usersNames = [];
-displayNames;
 
-  constructor(private settleUpProvider: SettleUpDbProvider) {
+export class AddMoreMembersModalComponent {
+searchUsers: Object;
+searchUsersNames: Array<string> = [];
+displaySearchNames: Array<string>;
+selectedNames: Array<string> = [];
+
+  constructor(
+    public viewCtrl: ViewController,
+    private settleUpProvider: SettleUpDbProvider
+  ) {
   this.settleUpProvider.usersRef.valueChanges().subscribe(data => {
-    this.users = data
+    this.searchUsers = data
     for (let i = 0; i < data.length; i++) {
-      this.usersNames.push(data[i].firstName);
+      this.searchUsersNames.push(data[i].firstName);
     }
   });
 
 }
 
-  getUsers(ev: any) {
-    this.displayNames = this.usersNames;
-    console.log(this.displayNames)
+  // getUsers(ev: any) {
+  //   this.displaySearchNames = this.searchUsersNames;
+  //   console.log(this.displaySearchNames)
 
+  //   let val = ev.target.value;
 
-    let val = ev.target.value;
+  //   if (val && val.trim() !== '') {
+  //     this.displaySearchNames = this.displaySearchNames.filter(user => {
+  //       return user.toLowerCase().includes(val.toLowerCase());
+  //     });
+  //   }    
+  // }
 
-    if (val && val.trim() !== '') {
-      this.displayNames = this.displayNames.filter(user => {
-        return user.toLowerCase().includes(val.toLowerCase());
-      });
-    }
-    
+  addMember(displaySearchName) {
+    this.selectedNames.push(displaySearchName);
+    console.log(this.selectedNames);
+  }
 
+  onClose() {
+    this.viewCtrl.dismiss(this.selectedNames).then(() => {
+      this.selectedNames = [];
+    });
   }
 
 }

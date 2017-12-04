@@ -8,6 +8,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { Observable } from 'rxjs/Observable'
 
 import { AddMoreMembersModalComponent } from '../../components/add-more-members-modal/add-more-members-modal';
+import { dispatchEvent } from '@angular/core/src/view/util';
 
 
 // @IonicPage()
@@ -22,7 +23,7 @@ export class NewGroupPage {
   users: Observable<any[]>;
   usersObj
   currentUserInfo
-  moreMembers = [];
+  moreMembers;
 
   constructor(
     public navCtrl: NavController,
@@ -50,28 +51,46 @@ export class NewGroupPage {
     let addMoreMembersModal = this.modalCtrl.create(AddMoreMembersModalComponent);
     addMoreMembersModal.present();
 
-    addMoreMembersModal.onDidDismiss(addMoreMembersData => {
+    addMoreMembersModal.onDidDismiss(selectedNames => {
       console.log("Did dismiss.");
-      console.log(addMoreMembersData);
-    })
+      console.log(selectedNames);
+      this.moreMembers = selectedNames;
+      
+      this.moreMembers = {
+        [this.currentUserInfo.displayName]: {
+          displayName: this.currentUserInfo.displayName,
+          uid: this.currentUID,
+          admin: true
+        }
+      }
 
+      console.log("Selected Names = " + selectedNames.length);
+  
+      for (let i = 0; i < selectedNames.length; i++) {
+        this.moreMembers[selectedNames[i].displayName] = {
+          displayName: selectedNames[i].displayName,
+          uid: selectedNames[i].uid,
+          admin: false
+        }
+
+        console.log(this.moreMembers);       
+      }
+  
+    });
+    
   }
 
   onSaveNewGroup() {
     this.saveNewGroup(this.newGroupName, this.newGroupDescription);
   }
 
-  saveNewGroup(newGroupName: string, newGroupDescription: string) {
+  saveNewGroup(newGroupName: string, newGroupDescription: any) {
+    if (!newGroupDescription) newGroupDescription = null;
+
     this.settleUpProvider.pushNewGroup({
       groupName: newGroupName,
       groupDescription: newGroupDescription,
-      users: {
-        [this.currentUID]: {
-          displayName: this.currentUserInfo.displayName,
-          uid: this.currentUID,
-          admin: true
-        }
-      },
+      members: this.moreMembers,
     });
     this.navCtrl.pop();
   }

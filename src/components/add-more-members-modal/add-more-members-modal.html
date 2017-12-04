@@ -2,25 +2,33 @@
     
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="dismiss()">Close</button>
+      <button ion-button (click)="onClose()">Close</button>
     </ion-buttons>
     <ion-title>Search for Members</ion-title>
   </ion-navbar>
 
-  <ion-toolbar>
+  <!-- <ion-toolbar>
       <ion-searchbar (ionInput)="getUsers($event)"></ion-searchbar>
-  </ion-toolbar>
+  </ion-toolbar> -->
     
 </ion-header>
 
 <ion-content padding>
 
-    <ion-list *ngFor="let displayName of displayNames">
-        <ion-card>
+    <!-- <ion-list *ngFor="let displaySearchName of displaySearchNames">
+        <ion-card (click)="addMember(displaySearchName)">
           <ion-card-header>
-            {{displayName}}
+            {{displaySearchName}}
           </ion-card-header>
         </ion-card>
+      </ion-list> -->
+
+      <ion-list *ngFor="let searchUser of searchUsers">
+          <ion-card (click)="addMember(searchUser)">
+            <ion-card-header>
+              {{searchUser?.displayName}}
+            </ion-card-header>
+          </ion-card>
       </ion-list>
       
 
