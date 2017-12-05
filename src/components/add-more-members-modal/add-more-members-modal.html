@@ -23,13 +23,21 @@
         </ion-card>
       </ion-list> -->
 
-      <ion-list *ngFor="let searchUser of searchUsers">
+      <!-- <ion-list *ngFor="let searchUser of searchUsers">
           <ion-card (click)="addMember(searchUser)">
             <ion-card-header>
               {{searchUser?.displayName}}
             </ion-card-header>
           </ion-card>
-      </ion-list>
+      </ion-list> -->
+
+      <ion-list *ngFor="let contact of contacts">
+        <ion-card (click)="addMember(searchUser)">
+          <ion-card-header>
+            {{contact?.displayName}}
+          </ion-card-header>
+        </ion-card>
+    </ion-list>
       
 
   

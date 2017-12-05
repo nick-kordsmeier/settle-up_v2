@@ -9,6 +9,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { AuthProvider } from '../providers/auth/auth';
 import { SettleUpDbProvider } from '../providers/settle-up-db/settle-up-db';
+import { NativeContactsProvider } from '../providers/native-contacts/native-contacts';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -23,7 +25,8 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     private authProvider: AuthProvider,
-    private settleUpProvider: SettleUpDbProvider
+    private settleUpProvider: SettleUpDbProvider,
+    private nativeContactsProvider: NativeContactsProvider
   ) {
 
     firebase.auth().getRedirectResult().then( result => {
@@ -53,6 +56,8 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      this.nativeContactsProvider.getNativeContacts();
+      console.log("Plugins ready");
     });
 
     firebase.auth().onAuthStateChanged( user => {
@@ -65,9 +70,7 @@ export class MyApp {
     });
   }
 
-  ionViewDidEnter() {
 
-  }
  }
   
   // logoutUser() {

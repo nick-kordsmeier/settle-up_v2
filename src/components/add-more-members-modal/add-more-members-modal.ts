@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ViewController } from 'ionic-angular';
+
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
+import { NativeContactsProvider } from '../../providers/native-contacts/native-contacts';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -14,16 +16,22 @@ searchUsers: Object;
 searchUsersNames: Array<string> = [];
 displaySearchNames: Array<string>;
 selectedNames: Array<string> = [];
+nativeContacts;
 
   constructor(
     public viewCtrl: ViewController,
-    private settleUpProvider: SettleUpDbProvider
+    private settleUpProvider: SettleUpDbProvider,
+    private nativeContactsProvider: NativeContactsProvider
   ) {
   this.settleUpProvider.usersRef.valueChanges().subscribe(data => {
     this.searchUsers = data
     for (let i = 0; i < data.length; i++) {
       this.searchUsersNames.push(data[i].firstName);
     }
+    
+      this.nativeContacts =  nativeContactsProvider.nativeContactsList;      
+      console.log(this.nativeContacts);
+
   });
 
 }

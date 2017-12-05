@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { Contacts } from '@ionic-native/contacts';
 
 import { NguUtilityModule } from '../../node_modules/ngu-utility/ngu-utility.module'
 
@@ -33,6 +34,7 @@ export const angularFirebaseConfig = {
 import { AuthProvider } from '../providers/auth/auth';
 import { SettleUpDbProvider } from '../providers/settle-up-db/settle-up-db';
 import { AddMoreMembersModalComponent } from '../components/add-more-members-modal/add-more-members-modal';
+import { NativeContactsProvider } from '../providers/native-contacts/native-contacts';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { AddMoreMembersModalComponent } from '../components/add-more-members-mod
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    SettleUpDbProvider
+    SettleUpDbProvider,
+    NativeContactsProvider,
+    Contacts
   ]
 })
 export class AppModule {}
