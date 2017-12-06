@@ -56,8 +56,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      this.nativeContactsProvider.getNativeContacts();
-      console.log("Plugins ready");
     });
 
     firebase.auth().onAuthStateChanged( user => {

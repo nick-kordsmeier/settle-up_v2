@@ -34,8 +34,9 @@
       <ion-list *ngFor="let contact of nativeContacts">
         <ion-card (click)="addMember(searchUser)">
           <ion-card-header>
-            {{JSON.stringify(contact)}}
+            {{contact?.name.givenName}} {{contact?.name.familyName}}
           </ion-card-header>
+          <p>{{contact?.phoneNumbers[0].value}}</p>
         </ion-card>
     </ion-list>
       

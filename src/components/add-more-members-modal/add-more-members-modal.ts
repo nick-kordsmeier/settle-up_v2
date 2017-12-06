@@ -29,7 +29,8 @@ nativeContacts;
       this.searchUsersNames.push(data[i].firstName);
     }
     
-      this.nativeContacts =  nativeContactsProvider.nativeContactsList;      
+      this.nativeContacts =  nativeContactsProvider.nativeContactsList;
+      console.log(this.nativeContacts);
 
 
   });

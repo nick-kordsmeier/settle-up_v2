@@ -12,6 +12,7 @@ export class NativeContactsProvider {
   getNativeContacts() {
     this.contacts.find(['*'], {filter: "", multiple: true}).then(data => {
       this.nativeContactsList = data;
+      console.log(data);
     });
   }
 
