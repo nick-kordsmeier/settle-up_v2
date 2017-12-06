@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Contacts } from '@ionic-native/contacts';
+//import { ContactsMock } from '../mocks/contacts'
+//import { ContactsMock } from '@ionic-native-mocks/Contacts';
 
 import { NguUtilityModule } from '../../node_modules/ngu-utility/ngu-utility.module'
 
@@ -79,6 +81,7 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
     SettleUpDbProvider,
     NativeContactsProvider,
     Contacts
+    //{provide: Contacts, useClass: ContactsMock}
   ]
 })
 export class AppModule {}
