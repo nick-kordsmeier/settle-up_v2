@@ -31,7 +31,7 @@
           </ion-card>
       </ion-list> -->
 
-      <ion-list *ngFor="let contact of contacts">
+      <ion-list *ngFor="let contact of nativeContacts">
         <ion-card (click)="addMember(searchUser)">
           <ion-card-header>
             {{contact?.displayName}}
