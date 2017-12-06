@@ -4,7 +4,7 @@
     <ion-buttons start>
       <button ion-button (click)="onClose()">Close</button>
     </ion-buttons>
-    <ion-title>Search for Members</ion-title>
+    <ion-title>Add Members</ion-title>
   </ion-navbar>
 
   <!-- <ion-toolbar>
@@ -34,7 +34,7 @@
       <ion-list *ngFor="let contact of nativeContacts">
         <ion-card (click)="addMember(searchUser)">
           <ion-card-header>
-            {{contact?.phoneNumbers[1]}}
+            {{contact}}
           </ion-card-header>
         </ion-card>
     </ion-list>

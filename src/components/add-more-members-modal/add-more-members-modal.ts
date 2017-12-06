@@ -30,7 +30,7 @@ nativeContacts;
     }
     
       this.nativeContacts =  nativeContactsProvider.nativeContactsList;      
-      console.log(this.nativeContacts);
+
 
   });
 
