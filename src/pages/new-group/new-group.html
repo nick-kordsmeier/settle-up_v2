@@ -34,13 +34,12 @@
         <p>You will be administrator of this group.</p>
       </ion-item>
 
-      <!-- <ion-item>    *****ngFor for users as they are added.
+      <ion-item *ngFor="let moreMember of moreMembers">
           <ion-avatar item-start>
-            <ngu-letter-avatar avatar-shape="round" avatar-data='{{currentUserName}}' ></ngu-letter-avatar>
+            <ngu-letter-avatar avatar-shape="round" avatar-data='{{moreMember?.givenName}}'></ngu-letter-avatar>
           </ion-avatar>
-          <h2>{{currentUserName}}</h2>
-          <p>You will be administrator of this group.</p>
-      </ion-item> -->
+          <h2>{{moreMember?.givenName}} {{moreMember?.familyName}}  {{moreMember?.activeUser}}</h2>
+      </ion-item>
 
       <ion-item (click)="addMoreMembers()">
         <ion-avatar item-start>

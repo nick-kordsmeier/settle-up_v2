@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
-//import { NguUtilityModule } from '../../../node_modules/ngu-utility/ngu-utility.module'
 
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db'
 import { AuthProvider } from '../../providers/auth/auth';
@@ -23,6 +22,7 @@ export class NewGroupPage {
   users: Observable<any[]>;
   usersObj
   currentUserInfo
+  groupMembers;
   moreMembers;
 
   constructor(
@@ -51,12 +51,13 @@ export class NewGroupPage {
     let addMoreMembersModal = this.modalCtrl.create(AddMoreMembersModalComponent);
     addMoreMembersModal.present();
 
-    addMoreMembersModal.onDidDismiss(selectedNames => {
+    addMoreMembersModal.onDidDismiss(selectedContacts => {
       console.log("Did dismiss.");
-      console.log(selectedNames);
-      this.moreMembers = selectedNames;
+      console.log(selectedContacts);
+      this.moreMembers = selectedContacts;
+      console.log(this.moreMembers)
       
-      this.moreMembers = {
+      this.groupMembers = {
         [this.currentUserInfo.displayName]: {
           displayName: this.currentUserInfo.displayName,
           uid: this.currentUID,
@@ -64,16 +65,22 @@ export class NewGroupPage {
         }
       }
 
-      console.log("Selected Names = " + selectedNames.length);
-  
-      for (let i = 0; i < selectedNames.length; i++) {
-        this.moreMembers[selectedNames[i].displayName] = {
-          displayName: selectedNames[i].displayName,
-          uid: selectedNames[i].uid,
-          admin: false
+      for (let i = 0; i < selectedContacts.length; i++) {
+        if (selectedContacts[i].activeUser) {
+          this.groupMembers[selectedContacts[i].givenName] = {
+            displayName: selectedContacts[i].givenName + " " + selectedContacts[i].familyName,
+            uid: selectedContacts[i].uid,
+            admin: false
+          }
+        } else {
+          this.groupMembers[selectedContacts[i].givenName] = {
+            displayName: selectedContacts[i].givenName + " " + selectedContacts[i].familyName,
+            admin: false
+          }
         }
 
-        console.log(this.moreMembers);       
+
+        console.log(this.groupMembers);       
       }
   
     });
@@ -90,7 +97,7 @@ export class NewGroupPage {
     this.settleUpProvider.pushNewGroup({
       groupName: newGroupName,
       groupDescription: newGroupDescription,
-      members: this.moreMembers,
+      members: this.groupMembers,
     });
     this.navCtrl.pop();
   }
