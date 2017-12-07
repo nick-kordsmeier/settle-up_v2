@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Contacts } from '@ionic-native/contacts';
-import { sortBy } from 'lodash';
-
 // import { ContactsMock } from '../mocks/contacts'
 
 import { NguUtilityModule } from '../../node_modules/ngu-utility/ngu-utility.module'
@@ -83,7 +81,6 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
     NativeContactsProvider,
     Contacts,
     // {provide: Contacts, useClass: ContactsMock},
-    sortBy
   ]
 })
 export class AppModule {}

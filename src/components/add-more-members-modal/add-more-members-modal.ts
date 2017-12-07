@@ -101,10 +101,22 @@ numberSelected = 0;
       }
   }
 
-  onClose() {
+  onSave() {
+    for (let i = 0; i < this.nativeContacts.length; i++) {
+        this.nativeContacts[i]["selected"] = false;
+        this.numberSelected = 0;
+      }
     this.viewCtrl.dismiss(this.selectedContacts).then(() => {
       this.selectedContacts = [];
     });
+  }
+
+  onCancel() {
+    for (let i = 0; i < this.nativeContacts.length; i++) {
+      this.nativeContacts[i]["selected"] = false;
+      this.numberSelected = 0;
+    }
+    this.viewCtrl.dismiss();
   }
 
 }

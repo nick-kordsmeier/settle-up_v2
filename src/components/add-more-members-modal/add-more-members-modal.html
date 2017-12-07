@@ -2,8 +2,12 @@
     
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="onClose()">Close</button>
+      <button ion-button (click)="onCancel()">Cancel</button>
     </ion-buttons>
+
+    <ion-buttons end>
+        <button ion-button (click)="onSave()">Save</button>
+      </ion-buttons>
     <ion-title>Add Members</ion-title>
   </ion-navbar>
 
