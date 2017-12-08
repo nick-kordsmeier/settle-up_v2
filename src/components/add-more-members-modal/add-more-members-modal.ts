@@ -30,9 +30,16 @@ numberSelected = 0;
       this.activeUsersData.push(data[i]);
     }
     //console.log(this.activeUsersData);
+    this.nativeContacts = [];    
+    for (let i = 0; i < this.nativeContactsProvider.nativeContactsList.length; i++) {
+      // this.nativeContacts[i].push({
+      //   "givenName": nativeContactsProvider.nativeContactsList[i].givenName,
+      //   "familyName": nativeContactsProvider.nativeContactsList[i].familyName,
+      //   "photos": nativeContactsProvider.nativeContactsList[i].photos[0].value
+      // });
 
-    this.nativeContacts =  nativeContactsProvider.nativeContactsList;
-    console.log(this.nativeContacts);
+      this.nativeContacts.push(this.nativeContactsProvider.nativeContactsList[i]._objectInstance);
+    }    
 
     for (let i = 0; i < this.nativeContacts.length; i++) {
       if (this.nativeContacts[i].emails) {

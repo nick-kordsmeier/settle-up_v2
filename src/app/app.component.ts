@@ -42,6 +42,7 @@ export class MyApp {
               firstName: splitName[0],
               lastName: splitName[1],
               photoURL: result.user.photoURL,
+              uid: userId
             });
             console.log("New FB user logged to database.");
           } else { console.log("This user already exists.")}

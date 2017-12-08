@@ -55,30 +55,35 @@ export class NewGroupPage {
       console.log("Did dismiss.");
       console.log(selectedContacts);
       this.moreMembers = selectedContacts;
-      console.log(this.moreMembers)
+      console.log(this.moreMembers);
+      console.log(this.moreMembers[0].name.givenName);
       
-      this.groupMembers = {
-        [this.currentUserInfo.displayName]: {
+      this.groupMembers = [
+        {
           displayName: this.currentUserInfo.displayName,
           uid: this.currentUID,
-          admin: true
+          admin: true,
+          photoURL: this.currentUserInfo.photoURL
         }
-      }
+      ]
 
       for (let i = 0; i < selectedContacts.length; i++) {
         if (selectedContacts[i].activeUser) {
-          this.groupMembers[selectedContacts[i].givenName] = {
-            displayName: selectedContacts[i].givenName + " " + selectedContacts[i].familyName,
+          this.groupMembers[i+1] = {
+            displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
             uid: selectedContacts[i].uid,
-            admin: false
+            admin: false,
           }
         } else {
-          this.groupMembers[selectedContacts[i].givenName] = {
-            displayName: selectedContacts[i].givenName + " " + selectedContacts[i].familyName,
-            admin: false
+          this.groupMembers[i+1] = {
+            displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
+            admin: false,
           }
         }
 
+        if (selectedContacts[i].photos !== null) {
+          this.groupMembers[i+1]["photoURL"] = selectedContacts[i].photos[0].value;          
+        }
 
         console.log(this.groupMembers);       
       }
