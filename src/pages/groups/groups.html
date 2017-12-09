@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Groups
+      Your Groups
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -10,11 +10,54 @@
 <button ion-button (click)="goToNewGroup()">Create New Group</button>
 
 <ion-list *ngFor="let group of groups | async">
-  <ion-card>
-    <ion-card-header>
-      {{group?.groupName}}
-    </ion-card-header>
-  </ion-card>
+  <ion-item>
+    <ion-card (click)="viewGroupDetails()">
+      <ion-card-content>
+        <ion-card-title>
+          {{group?.groupName}}
+        </ion-card-title>
+        <p *ngIf="group?.groupDescription">{{group?.groupDescription}}</p>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col col-3>
+              <ion-avatar item-start *ngIf="group?.members[0].photoURL">
+                  <img src="{{group?.members[0].photoURL}}">
+              </ion-avatar>
+              <ion-avatar item-start *ngIf="!group?.members[0].photoURL">
+                  <ngu-letter-avatar avatar-shape="round" avatar-data='{{group?.members[0].displayName}}' ></ngu-letter-avatar>              
+              </ion-avatar>
+            </ion-col>
+
+            <ion-col col-3>
+            <ng-container *ngIf="group?.members[1]">
+              <ion-avatar item-start *ngIf="group?.members[1].photoURL">
+                  <img src="{{group?.members[1].photoURL}}">
+              </ion-avatar>
+              <ion-avatar item-start *ngIf="!group?.members[1].photoURL">
+                  <ngu-letter-avatar avatar-shape="round" avatar-data='{{group?.members[1].displayName}}'></ngu-letter-avatar>              
+              </ion-avatar>
+            </ng-container>
+          </ion-col>
+
+            <ion-col col-3>
+            <ng-container *ngIf="group?.members[2]">
+              <ion-avatar item-start *ngIf="group?.members[2].photoURL">
+                  <img src="{{group?.members[2].photoURL}}">
+              </ion-avatar>
+              <ion-avatar item-start *ngIf="!group?.members[2].photoURL">
+                  <ngu-letter-avatar avatar-shape="round" avatar-data='{{group?.members[2].displayName}}'></ngu-letter-avatar>              
+              </ion-avatar>
+            </ng-container>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+
+
+      </ion-card-content>
+    </ion-card>
+</ion-item>
 </ion-list>
 
 </ion-content>
