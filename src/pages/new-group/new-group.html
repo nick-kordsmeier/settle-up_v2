@@ -31,8 +31,8 @@
           <ion-avatar item-start *ngIf="currentUserInfo?.photoURL">
               <img src="{{currentUserInfo?.photoURL}}">
           </ion-avatar>
-          <ion-avatar item-start *ngIf="!currentUserInfo?.photoURL">
-              <ngu-letter-avatar avatar-shape="round" avatar-data='{{currentUserInfo?.firstName}}' ></ngu-letter-avatar>              
+          <ion-avatar item-start *ngIf="!currentUserInfo?.photoURL">             
+              <ngu-letter-avatar avatar-shape="round" avatar-char-count="2" avatar-data='{{currentUserInfo?.firstName}} {{currentUserInfo?.lastName}}'></ngu-letter-avatar>              
           </ion-avatar>
 
         <h2>{{currentUserInfo?.firstName}} {{currentUserInfo?.lastName}}</h2>
@@ -45,13 +45,13 @@
               <img src="{{moreMember?.photos[0].value}}">
           </ion-avatar>
           <ion-avatar item-start *ngIf="!moreMember.photos">
-              <ngu-letter-avatar avatar-shape="round" avatar-data='{{moreMember?.name.givenName}}' ></ngu-letter-avatar>              
+              <ngu-letter-avatar avatar-shape="round" avatar-char-count="2" avatar-data='{{moreMember?.name.givenName}} {{moreMember?.name.familyName}}'></ngu-letter-avatar>              
           </ion-avatar>
           <h2>{{moreMember?.name.givenName}} {{moreMember?.name.familyName}} </h2>
           <p *ngIf="moreMember?.activeUser">Active Settle-Up User</p>
       </ion-item>
 
-      <ion-item (click)="addMoreMembers()">
+      <ion-item (tap)="addMoreMembers()">
         <ion-avatar item-start>
 
               <ion-icon name="add-circle"></ion-icon>

@@ -7,18 +7,36 @@
 </ion-header>
 
 <ion-content padding>
-<button ion-button (click)="goToNewGroup()">Create New Group</button>
+  <button ion-button (tap)="goToNewGroup()">Create New Group</button>
+    
+  <ion-list>
+    <button ion-item *ngFor="let group of groups | async" (tap)="goToGroupDetails(group.key)">
+      <h2>{{group?.groupName}}</h2>
+      <p>{{group?.groupDescription}}</p>
+      <ion-row>
+          <ion-col class="group-member-info">
+            <div>
+              <ion-icon name="people" style="font-size:25px"></ion-icon>
+              <ion-badge>{{group?.members?.length}}</ion-badge>
+              <ion-note>members</ion-note>
+            </div>
+          </ion-col>
 
-<ion-list *ngFor="let group of groups | async">
-  <ion-item>
-    <ion-card (click)="viewGroupDetails()">
-      <ion-card-content>
-        <ion-card-title>
-          {{group?.groupName}}
-        </ion-card-title>
-        <p *ngIf="group?.groupDescription">{{group?.groupDescription}}</p>
+          <ion-col class="group-purchases-info">
+            <div>
+              <ion-icon name="pricetag"></ion-icon>
+              <ion-badge>2</ion-badge>
+              <ion-note>purchases</ion-note>
+            </div>
+          </ion-col>
+      </ion-row>
+    </button>
+  </ion-list>
 
-        <ion-grid>
+</ion-content>
+
+
+        <!-- <ion-grid>
           <ion-row>
             <ion-col col-3>
               <ion-avatar item-start *ngIf="group?.members[0].photoURL">
@@ -52,12 +70,4 @@
           </ion-col>
 
         </ion-row>
-      </ion-grid>
-
-
-      </ion-card-content>
-    </ion-card>
-</ion-item>
-</ion-list>
-
-</ion-content>
+      </ion-grid> -->

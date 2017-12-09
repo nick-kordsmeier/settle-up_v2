@@ -107,11 +107,19 @@ export class NewGroupPage {
         // Loop through the selected contacts and push the data into the groupMembers array to be sent to Firebase when the new group is created.
         for (let i = 0; i < selectedContacts.length; i++) {
           if (selectedContacts[i].activeUser) {
+            let selectedActiveUser;
+            this.settleUpProvider.getUserData(selectedContacts[i].uid).then( data => {              
+              selectedActiveUser = data;
+              console.log(selectedActiveUser);
+
             this.groupMembers[i+1] = {
               displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
               uid: selectedContacts[i].uid,
               admin: false,
+              photoURL: selectedActiveUser.photoURL
             }
+            });            
+
           } else {
             this.groupMembers[i+1] = {
               displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
@@ -120,9 +128,9 @@ export class NewGroupPage {
           }
 
           // Pushing contact photo paths if they exist. These will only work on native device.
-          if (selectedContacts[i].photos !== null) {
-            this.groupMembers[i+1]["photoURL"] = selectedContacts[i].photos[0].value;          
-          }
+          // if (selectedContacts[i].photos !== null) {
+          //   this.groupMembers[i+1]["photoURL"] = selectedContacts[i].photos[0].value;          
+          // }
 
           console.log(this.groupMembers);
         }

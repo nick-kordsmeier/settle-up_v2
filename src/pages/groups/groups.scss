@@ -1,3 +1,37 @@
 page-groups {
 
+    ion-note {
+        font-size: 0.75em;
+    }
+
+    .group-member-info {
+        ion-label {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline
+        }
+    
+        ion-icon {
+            font-size: 25px;
+            position: relative;
+            top: 5px;
+        }
+    }
+
+    .group-purchases-info {
+        position: relative;
+        top: 5px;
+        ion-label {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline
+        }
+    
+        ion-icon {
+            font-size: 20px;
+            position: relative;
+            top: 5px;
+        }
+    }
+
 }

@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Group Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ng-container *ngIf="groupDetails">
+      <ion-label stacked>Group Name:</ion-label>
+      <div class="group-name">{{groupDetails?.groupName}}</div>
+
+      <ion-label *ngIf="groupDetails?.groupDescription" stacked>Description:</ion-label>
+      <div class="group-details">
+        {{groupDetails?.groupDescription}}
+      </div>
+
+      <div class="button">
+        <button ion-button (tap)="goToNewPurchase(groupDetails?.key)">Add New Purchase</button>
+      </div>
+          
+
+    <h3>Members</h3>
+    <ion-list>
+      <ion-item *ngFor="let groupMember of groupMembers">
+
+          <ion-avatar item-start *ngIf="groupMember?.photoURL">
+              <img src="{{groupMember?.photoURL}}">
+          </ion-avatar>
+          <ion-avatar item-start *ngIf="!groupMember?.photoURL">
+              <ngu-letter-avatar avatar-shape="round" avatar-char-count="2" avatar-data='{{groupMember?.displayName}}' ></ngu-letter-avatar>              
+          </ion-avatar>
+
+        <h2>{{groupMember?.displayName}}</h2>
+        <ion-note *ngIf="groupMember?.admin">Admin</ion-note>
+      </ion-item>
+
+    </ion-list>
+  </ng-container>
+</ion-content>

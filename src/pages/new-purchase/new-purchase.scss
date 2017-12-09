@@ -1,3 +1,10 @@
-page-new-purchase {
+page-new-purchase {    
+    .required {
+        ion-label:after {
+            color: #e32;
+            content: ' *';
+            display:inline;
+        }
+    }
 
 }

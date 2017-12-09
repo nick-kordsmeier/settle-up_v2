@@ -1,10 +1,9 @@
-
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Add Purchase</ion-title>
+    <ion-title>New Purchase</ion-title>
     <ion-buttons right>
-      <button ion-button clear (click)='saveNewPurchase()'>Save</button>
+        <button ion-button clear (click)='onSaveNewPurchase()'>Save</button>
     </ion-buttons>
   </ion-navbar>
 
@@ -12,5 +11,48 @@
 
 
 <ion-content padding>
+
+  <h2>Enter Purchase Details</h2>
+    <form (ngSubmit)="onSaveNewPurchase()">
+        <ion-item class="required">
+          <ion-label stacked >Group:</ion-label>
+          <ion-select [(ngModel)]="groupVal" name="groupVal" interface="popover">
+            <ng-container *ngFor="let group of groups">
+            <ion-option value="{{group?.groupName}}">{{group?.groupName}}</ion-option>
+          </ng-container>
+          </ion-select>
+        </ion-item>
+        <ion-item class="required">
+            <ion-label stacked>Item:</ion-label>
+            <ion-input type="text" [(ngModel)]="itemVal" name="itemVal"></ion-input>
+        </ion-item>
+        <ion-item class="required">
+            <ion-label stacked>Price:</ion-label>
+            <ion-input type="number" currencyMask [(ngModel)]="priceVal" name="priceVal"></ion-input>      
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Description:</ion-label>
+            <ion-textarea type="text" [(ngModel)]="descriptionVal" name="descriptionVal" placeholder="(optional)"></ion-textarea>      
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>For who?</ion-label>
+            <ion-input type="text" [(ngModel)]="forWhoVal" name="forWhoVal"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Occasion</ion-label>
+            <ion-input type="text" [(ngModel)]="occasionVal" name="occasionVal" placeholder="e.g., Birthday"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Date Purchased</ion-label>
+          <ion-datetime displayFormat="MM/DD/YYYY" max="2040" min="2000" [(ngModel)]="datePurchasedVal" name="datePurchasedVal"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>Bought From</ion-label>
+            <ion-input type="text" [(ngModel)]="boughtFromVal" name="boughtFromVal" placeholder="e.g., Walmart"></ion-input>
+        </ion-item>
+        <button ion-button type="submit" (click)='onSaveNewPurchase()'>Submit</button>
+        
+    
+    </form>
 
 </ion-content>

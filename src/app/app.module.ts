@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Contacts } from '@ionic-native/contacts';
-// import { ContactsMock } from '../mocks/contacts'
 
 import { NguUtilityModule } from '../../node_modules/ngu-utility/ngu-utility.module'
 
@@ -16,6 +15,7 @@ import { SignupPage } from '../pages/signup/signup';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { NewGroupPage } from '../pages/new-group/new-group';
 import { NewPurchasePage } from '../pages/new-purchase/new-purchase';
+import { GroupDetailsPage } from '../pages/group-details/group-details';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -41,6 +41,7 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
   declarations: [
     MyApp,
     GroupsPage,
+    GroupDetailsPage,
     PurchasesPage,
     DashboardPage,
     TabsPage,
@@ -49,20 +50,21 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
     ResetPasswordPage,
     NewGroupPage,
     NewPurchasePage,
-    AddMoreMembersModalComponent
+    AddMoreMembersModalComponent,    
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(angularFirebaseConfig),
     AngularFireDatabaseModule,
-    NguUtilityModule
+    NguUtilityModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     DashboardPage,
     GroupsPage,
+    GroupDetailsPage,
     PurchasesPage,
     TabsPage,
     LoginPage,
@@ -80,7 +82,6 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
     SettleUpDbProvider,
     NativeContactsProvider,
     Contacts,
-    // {provide: Contacts, useClass: ContactsMock},
   ]
 })
 export class AppModule {}

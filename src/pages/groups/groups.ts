@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { NewGroupPage } from '../new-group/new-group';
+
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
+import { GroupDetailsPage } from '../group-details/group-details';
 
 import { Observable } from 'rxjs/Observable'
 
@@ -14,7 +16,10 @@ import { Observable } from 'rxjs/Observable'
 export class GroupsPage {
   groups: Observable<any[]>;
   
-  constructor(public navCtrl: NavController, private settleUpProvider: SettleUpDbProvider ) {
+  constructor(
+    public navCtrl: NavController,
+    private settleUpProvider: SettleUpDbProvider 
+  ) {
     this.groups = this.settleUpProvider.groupsRef.valueChanges();
 
   }
@@ -22,6 +27,10 @@ export class GroupsPage {
   goToNewGroup() {
     console.log('New Group');
     this.navCtrl.push(NewGroupPage);
+  }
+
+  goToGroupDetails(key) {
+    this.navCtrl.push(GroupDetailsPage, {key: key});
   }
 
 }
