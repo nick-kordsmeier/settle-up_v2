@@ -27,6 +27,7 @@ export class NewPurchasePage {
   boughtFromVal = null;
 
   newPurchaseObj;
+  numPurchases: number;
 
   constructor(
     public navCtrl: NavController,
@@ -39,25 +40,23 @@ export class NewPurchasePage {
     this.settleUpProvider.getGroupDetails(this.navParams.get("key")).then( data => {
       this.groupDetails = data;
       this.groupMembers = this.groupDetails.members;
-      console.log(this.groupDetails)
-
       this.groupVal = this.groupDetails.groupName;
+      console.log(this.groupDetails);
+
+      if (this.groupDetails.numPurchases) {
+        this.numPurchases = this.groupDetails.numPurchases; 
+      } else this.numPurchases = 0;
     });
 
     this.settleUpProvider.getActiveUserGroup(this.currentUID).then(data => {
-      console.log("getting groups:");
-      console.log(data);
       this.groupsObj = data;
-
-      console.log(this.groupsObj);
       let groupKeys = Object.keys(this.groupsObj);
-      console.log(groupKeys);
       for (let i = 0; i < groupKeys.length; i++) {
         this.groups.push(this.groupsObj[groupKeys[i]]);
-        console.log(this.groups);
       }
+      console.log(this.groups);
+
     });
-    //this.groups = [{groupName: "test1"}, {groupName: "test2"}];
   }
 
   ionViewWillEnter() {
@@ -82,14 +81,44 @@ export class NewPurchasePage {
       groupName: this.groupVal,
       groupKey: this.groupDetails.key
     }
-
-    this.saveNewPurchase(this.groupDetails.key, newPurchaseObj);
+    this.numPurchases++
+    this.saveNewPurchase(this.groupDetails.key, newPurchaseObj, this.numPurchases, this.currentUID, this.groupMembers);
   }
 
-  saveNewPurchase(groupKey, newPurchaseObj) {
-    this.settleUpProvider.pushNewPurchase(groupKey, newPurchaseObj);
+  saveNewPurchase(groupKey, newPurchaseObj, numPurchases, uid, groupMembers) {
+    this.settleUpProvider.pushNewPurchase(groupKey, newPurchaseObj, numPurchases, uid, groupMembers);
     this.navCtrl.pop();
+
+    // Update each group members' balances.
+    let purchaserIndex = groupMembers.findIndex(element => element["uid"] === uid);
+    console.log(purchaserIndex);
+    let purchasePrice = newPurchaseObj.price;
+    console.log(purchasePrice);
+    let numMembers = this.groupMembers.length;
+    console.log(numMembers);
+
+    for (let i = 0; i < numMembers; i ++) {
+      for (let j = 0; j < numMembers; j++) {        
+        if (i === purchaserIndex) {
+          if (i !== j) {
+            this.groupMembers[i][`${i}-${j}`] += purchasePrice/numMembers
+          }
+        } else {
+          if (i !== j) {
+            this.groupMembers[i][`${i}-${j}`] -= purchasePrice/numMembers
+          }
+        }
+      }
+    }
+
+    this.updateBalances();
   }
+
+  updateBalances() {
+    this.settleUpProvider.updateBalances(this.groupDetails.key, this.groupMembers);;
+  }
+
+
 
 
 }

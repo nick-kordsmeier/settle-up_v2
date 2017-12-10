@@ -4,7 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Contacts } from '@ionic-native/contacts';
 
-import { NguUtilityModule } from '../../node_modules/ngu-utility/ngu-utility.module'
+import { NguUtilityModule } from '../../node_modules/ngu-utility/dist'
 
 import { GroupsPage } from '../pages/groups/groups';
 import { PurchasesPage } from '../pages/purchases/purchases';

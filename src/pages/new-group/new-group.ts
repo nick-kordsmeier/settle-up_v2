@@ -93,53 +93,133 @@ export class NewGroupPage {
           this.moreMembers = selectedContacts;
           console.log(this.moreMembers);
         }
-
+        
+        // Loop through the selected contacts and push the data into the groupMembers array to be sent to Firebase when the new group is created.
+        console.log("selectedContacts Length = ");
+        console.log(selectedContacts.length);
         // Initialize groupMembers array with admin credentials.
         this.groupMembers = [
           {
             displayName: this.currentUserInfo.displayName,
             uid: this.currentUID,
             admin: true,
-            photoURL: this.currentUserInfo.photoURL
+            photoURL: this.currentUserInfo.photoURL,
+            groupID: 0
           }
         ]
+
+        for (let i = 0; i < selectedContacts.length; i++) {            
+
+              this.settleUpProvider.getUserData(selectedContacts[i].uid).then( UserData => {
+                console.log(selectedContacts[i].activeUser);
+                console.log("Active user data returned from promise");
+                console.log(UserData)
+                let selectedActiveUser = UserData;
+                console.log("Selected Active User Data in variable");
+                console.log(selectedActiveUser);
+          
+          this.addToGroupMembersArray(selectedContacts[i], selectedActiveUser).then( MemberData => {
+                    // console.log("selected contacts = ");
+                    // console.log(selectedContacts);
+                    let returnedGroupMembersArr = MemberData;
+                    console.log("Data returned from addToGroupMembersArray() = ");
+                    console.log(MemberData);
+                    console.log("returnedGroupMemberArr = ");
+                    console.log(returnedGroupMembersArr);
+            
+                    // for (let i = 0; i < returnedGroupMembersArr.length; i++)
+                    console.log("this.groupMembers before = ");
+                    console.log(this.groupMembers);
+            
+                      this.groupMembers.push(MemberData[0]);
+            
+                      console.log("this.groupMembers after push = ");
+                      console.log(this.groupMembers);
+                      
+            
+                    // Initialize the variables that will store who owes who what.
+                    console.log("Outer for loop starts")
+                    console.log(this.groupMembers.length);
+                    for (let i = 0; i < this.groupMembers.length; i++) {
+                      console.log("Inner for loop starts")
+                      console.log(this.groupMembers);
+                      for (let j = 0; j < this.groupMembers.length; j++) {
+                        console.log(this.groupMembers[i].groupID)
+            
+                        if (this.groupMembers[i].groupID !== j) {
+                          this.groupMembers[i][`${i}-${j}`] = 0;
+                        }
+                      }
+                    }
+                    console.log("this.groupMembers after loops = ");
+                    console.log(this.groupMembers);
+                    });
+                  });
+
+
+
+        // for (let i = 0; i < selectedContacts.length; i++) {
+        //   if (selectedContacts[i].activeUser) {
+        //     let selectedActiveUser;
+        //     this.settleUpProvider.getUserData(selectedContacts[i].uid).then( data => {              
+        //       selectedActiveUser = data;
+        //       console.log(selectedActiveUser);
+
+        //     this.groupMembers[i+1] = {
+        //       displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
+        //       uid: selectedContacts[i].uid,
+        //       admin: false,
+        //       photoURL: selectedActiveUser.photoURL,
+        //       groupID: i + 1
+        //     }
+        //     });            
+
+        //   } else {
+        //     this.groupMembers[i+1] = {
+        //       displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
+        //       admin: false,
+        //       groupID: i + 1
+        //     }
+        //   }
+        //   console.log(this.groupMembers);
+        // }
+
+
+
         
-        // Loop through the selected contacts and push the data into the groupMembers array to be sent to Firebase when the new group is created.
-        for (let i = 0; i < selectedContacts.length; i++) {
-          if (selectedContacts[i].activeUser) {
-            let selectedActiveUser;
-            this.settleUpProvider.getUserData(selectedContacts[i].uid).then( data => {              
-              selectedActiveUser = data;
-              console.log(selectedActiveUser);
-
-            this.groupMembers[i+1] = {
-              displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
-              uid: selectedContacts[i].uid,
-              admin: false,
-              photoURL: selectedActiveUser.photoURL
-            }
-            });            
-
-          } else {
-            this.groupMembers[i+1] = {
-              displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
-              admin: false,
-            }
-          }
-
-          // Pushing contact photo paths if they exist. These will only work on native device.
-          // if (selectedContacts[i].photos !== null) {
-          //   this.groupMembers[i+1]["photoURL"] = selectedContacts[i].photos[0].value;          
-          // }
-
-          console.log(this.groupMembers);
-        }
-        console.log(this.moreMembers);
+        // console.log(this.moreMembers);
       }
+    }
     });    
-    
   }
   
+addToGroupMembersArray(selectedContact, selectedActiveUser) {
+  let groupMembers = []; // Return this new variable to be pushed into this.groupMembers when promise is fulfilled.
+
+        if (selectedActiveUser) {
+          groupMembers.push({
+            displayName: selectedContact.name.givenName + " " + selectedContact.name.familyName,
+            uid: selectedContact.uid,
+            admin: false,
+            photoURL: selectedActiveUser.photoURL, //Not sure about this.
+            groupID: 1
+          })
+      
+          console.log("groupMembers within if activeuser loop")
+          console.log(groupMembers);
+        } else {
+          groupMembers.push({
+            displayName: selectedContact.name.givenName + " " + selectedContact.name.familyName,
+            admin: false,
+            groupID: 1
+          })
+          console.log("groupMembers within non-active contact if loop")
+          console.log(groupMembers);      
+        }
+        return new Promise (resolve => {
+          resolve(groupMembers);
+        });
+    }
 
   onSaveNewGroup() {
     this.saveNewGroup(this.newGroupName, this.newGroupDescription);
@@ -152,6 +232,7 @@ export class NewGroupPage {
       groupName: newGroupName,
       groupDescription: newGroupDescription,
       members: this.groupMembers,
+      numPurchases: 0
     });
     this.navCtrl.pop();
   }
