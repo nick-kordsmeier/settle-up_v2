@@ -25,6 +25,7 @@ selectedContacts = [];
 deSelectedContacts = [];
 nativeContacts;
 numberSelected = 0;
+anyActiveUsers;
 
   constructor(
     public viewCtrl: ViewController,
@@ -94,6 +95,8 @@ numberSelected = 0;
   }
 
   ionViewDidLoad() {
+    this.anyActiveUsers = 0;
+    
     this.nativeContacts = [];
     for (let i = 0; i < this.nativeContactsProvider.nativeContactsList.length; i++) {
       this.nativeContacts.push(this.nativeContactsProvider.nativeContactsList[i]._objectInstance);
@@ -120,6 +123,7 @@ numberSelected = 0;
           loop2: for (let j = 0; j < this.nativeContacts[i].emails.length; j++) {
             let activeIndex = this.activeUsersData.findIndex(element => element["email"] === this.nativeContacts[i].emails[j].value);
             if (activeIndex >= 0) {
+              this.anyActiveUsers++
               this.nativeContacts[i]["activeUser"] = true;
               this.nativeContacts[i]["uid"] = this.activeUsersData[activeIndex].uid;
               break loop2;
@@ -160,6 +164,7 @@ numberSelected = 0;
   }
 
   onSave() {
+    this.anyActiveUsers = 0;
     for (let i = 0; i < this.selectedContacts.length; i++) {
       let index = this.nativeContacts.findIndex(o => o === this.selectedContacts[i]);
       this.nativeContacts[index].selected = false;

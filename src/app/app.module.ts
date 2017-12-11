@@ -16,6 +16,9 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { NewGroupPage } from '../pages/new-group/new-group';
 import { NewPurchasePage } from '../pages/new-purchase/new-purchase';
 import { GroupDetailsPage } from '../pages/group-details/group-details';
+import { PopoverMenuComponent } from '../components/popover-menu/popover-menu';
+import { AddMoreMembersModalComponent } from '../components/add-more-members-modal/add-more-members-modal';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,7 +37,6 @@ export const angularFirebaseConfig = {
 
 import { AuthProvider } from '../providers/auth/auth';
 import { SettleUpDbProvider } from '../providers/settle-up-db/settle-up-db';
-import { AddMoreMembersModalComponent } from '../components/add-more-members-modal/add-more-members-modal';
 import { NativeContactsProvider } from '../providers/native-contacts/native-contacts';
 
 @NgModule({
@@ -50,7 +52,8 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
     ResetPasswordPage,
     NewGroupPage,
     NewPurchasePage,
-    AddMoreMembersModalComponent,    
+    AddMoreMembersModalComponent,
+    PopoverMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,8 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
     ResetPasswordPage,
     NewGroupPage,
     NewPurchasePage,
-    AddMoreMembersModalComponent
+    AddMoreMembersModalComponent,
+    PopoverMenuComponent
   ],
   providers: [
     StatusBar,

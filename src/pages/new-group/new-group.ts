@@ -22,6 +22,7 @@ export class NewGroupPage {
   currentUserInfo;
   groupMembers;
   moreMembers;
+  groupIDCounter = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -98,17 +99,21 @@ export class NewGroupPage {
         console.log("selectedContacts Length = ");
         console.log(selectedContacts.length);
         // Initialize groupMembers array with admin credentials.
+        let currentUserPhotoURL = null;
+        if (this.currentUserInfo.photoURL) {currentUserPhotoURL = this.currentUserInfo.photoURL};
+
         this.groupMembers = [
           {
             displayName: this.currentUserInfo.displayName,
             uid: this.currentUID,
             admin: true,
-            photoURL: this.currentUserInfo.photoURL,
-            groupID: 0
+            photoURL: currentUserPhotoURL,
+            groupID: 0,
+            email: this.currentUserInfo.email
           }
         ]
 
-        for (let i = 0; i < selectedContacts.length; i++) {            
+        for (let i = 0; i < selectedContacts.length; i++) {
 
               this.settleUpProvider.getUserData(selectedContacts[i].uid).then( UserData => {
                 console.log(selectedContacts[i].activeUser);
@@ -197,12 +202,19 @@ addToGroupMembersArray(selectedContact, selectedActiveUser) {
   let groupMembers = []; // Return this new variable to be pushed into this.groupMembers when promise is fulfilled.
 
         if (selectedActiveUser) {
+          let selectedActiveUserPhotoURL = null;
+          if (selectedActiveUser.photoURL) {selectedActiveUserPhotoURL = selectedActiveUser.photoURL};
+          this.groupIDCounter++ // Add one for each additional selected user.
+          console.log("Group ID Counter")
+          console.log(this.groupIDCounter);
+
           groupMembers.push({
             displayName: selectedContact.name.givenName + " " + selectedContact.name.familyName,
             uid: selectedContact.uid,
             admin: false,
-            photoURL: selectedActiveUser.photoURL, //Not sure about this.
-            groupID: 1
+            photoURL: selectedActiveUserPhotoURL,
+            groupID: this.groupIDCounter,
+            email: selectedActiveUser.email
           })
       
           console.log("groupMembers within if activeuser loop")
@@ -211,7 +223,7 @@ addToGroupMembersArray(selectedContact, selectedActiveUser) {
           groupMembers.push({
             displayName: selectedContact.name.givenName + " " + selectedContact.name.familyName,
             admin: false,
-            groupID: 1
+            groupID: this.groupIDCounter
           })
           console.log("groupMembers within non-active contact if loop")
           console.log(groupMembers);      

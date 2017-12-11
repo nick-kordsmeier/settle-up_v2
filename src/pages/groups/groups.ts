@@ -1,28 +1,57 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, PopoverController } from 'ionic-angular';
 
 import { NewGroupPage } from '../new-group/new-group';
+import { PopoverMenuComponent } from '../../components/popover-menu/popover-menu'
 
+import { AuthProvider } from '../../providers/auth/auth';
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
 import { GroupDetailsPage } from '../group-details/group-details';
-
-import { Observable } from 'rxjs/Observable'
-
 
 @Component({
   selector: 'page-groups',
   templateUrl: 'groups.html'
 })
 export class GroupsPage {
-  groups: Observable<any[]>;
+
+
+  groups = [];
+  currentUID;
+  groupsObj;
+  currentUserInfo;
   
   constructor(
     public navCtrl: NavController,
-    private settleUpProvider: SettleUpDbProvider 
+    public popoverCtrl: PopoverController,
+    private authProvider: AuthProvider,
+    private settleUpProvider: SettleUpDbProvider
   ) {
-    this.groups = this.settleUpProvider.groupsRef.valueChanges();
 
   }
+
+  ionViewWillEnter() {
+    this.currentUID = this.authProvider.getUID();
+  }
+
+  ionViewDidEnter() {
+    this.settleUpProvider.getUserData(this.currentUID).then(uidData => {
+      this.currentUserInfo = uidData;
+      console.log(this.currentUserInfo)
+    });
+
+    this.groups = [];
+    this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
+      if (activeUserGroupsData !== null) { 
+      this.groupsObj = activeUserGroupsData;
+      let groupKeys = Object.keys(this.groupsObj);
+      for (let i = 0; i < groupKeys.length; i++) {
+        this.groups.push(this.groupsObj[groupKeys[i]]);
+      }
+      console.log(this.groups);
+    }
+    });    
+  }
+
  
   goToNewGroup() {
     console.log('New Group');
@@ -31,6 +60,14 @@ export class GroupsPage {
 
   goToGroupDetails(key) {
     this.navCtrl.push(GroupDetailsPage, {key: key});
+  }
+  
+  presentPopover(ev: UIEvent) {
+    let popover = this.popoverCtrl.create(PopoverMenuComponent);
+
+    popover.present({
+      ev: ev
+    });
   }
 
 }

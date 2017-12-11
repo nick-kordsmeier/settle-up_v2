@@ -35,10 +35,20 @@ export class NewPurchasePage {
     private authProvider: AuthProvider,
     private settleUpProvider: SettleUpDbProvider
   ) {
+
+  }
+
+  ionViewWillEnter() {
     this.currentUID = this.authProvider.getUID();
-    
-    this.settleUpProvider.getGroupDetails(this.navParams.get("key")).then( data => {
-      this.groupDetails = data;
+  }
+
+  ionViewDidEnter() {
+    this.settleUpProvider.getUserData(this.currentUID).then(uidData => {
+      this.currentUserInfo = uidData;
+    });
+
+    this.settleUpProvider.getGroupDetails(this.navParams.get("key")).then( groupDetailData => {
+      this.groupDetails = groupDetailData;
       this.groupMembers = this.groupDetails.members;
       this.groupVal = this.groupDetails.groupName;
       console.log(this.groupDetails);
@@ -48,8 +58,9 @@ export class NewPurchasePage {
       } else this.numPurchases = 0;
     });
 
-    this.settleUpProvider.getActiveUserGroup(this.currentUID).then(data => {
-      this.groupsObj = data;
+        
+    this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
+      this.groupsObj = activeUserGroupsData;
       let groupKeys = Object.keys(this.groupsObj);
       for (let i = 0; i < groupKeys.length; i++) {
         this.groups.push(this.groupsObj[groupKeys[i]]);
@@ -57,12 +68,6 @@ export class NewPurchasePage {
       console.log(this.groups);
 
     });
-  }
-
-  ionViewWillEnter() {
-    this.settleUpProvider.getUserData(this.currentUID).then(data => {
-      this.currentUserInfo = data;
-    });        
   }
 
   onSaveNewPurchase() {
@@ -96,18 +101,24 @@ export class NewPurchasePage {
     console.log(purchasePrice);
     let numMembers = this.groupMembers.length;
     console.log(numMembers);
+    console.log(purchasePrice/numMembers)
 
     for (let i = 0; i < numMembers; i ++) {
-      for (let j = 0; j < numMembers; j++) {        
+      for (let j = 0; j < numMembers; j++) {
         if (i === purchaserIndex) {
           if (i !== j) {
-            this.groupMembers[i][`${i}-${j}`] += purchasePrice/numMembers
-          }
-        } else {
-          if (i !== j) {
-            this.groupMembers[i][`${i}-${j}`] -= purchasePrice/numMembers
+            console.log("Before")
+            console.log(this.groupMembers[i][`${i}-${j}`]);
+            this.groupMembers[i][`${i}-${j}`] += (purchasePrice/numMembers)
+            console.log("After")
+            console.log(this.groupMembers[i][`${i}-${j}`]);
           }
         }
+      }
+      if (i !== purchaserIndex) {
+        this.groupMembers[i][`${i}-${purchaserIndex}`] -= (purchasePrice/numMembers)
+        console.log("If subtracting");
+        console.log(this.groupMembers[i][`${i}-${purchaserIndex}`]);
       }
     }
 

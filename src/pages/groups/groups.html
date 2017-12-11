@@ -1,16 +1,40 @@
 <ion-header>
   <ion-navbar>
+      <ion-buttons start>
+          <button ion-button icon-only (click)="presentPopover($event)">
+            <ng-container *ngIf="currentUserInfo">
+                <ion-avatar *ngIf="currentUserInfo?.photoURL">
+                    <img style="width: 30% !important; height: 30% !important;" src="{{currentUserInfo?.photoURL}}">
+                </ion-avatar>
+                <ion-avatar *ngIf="!currentUserInfo?.photoURL">
+                  <div style="width: 65% !important; height: 65% !important;">
+                    <ngu-letter-avatar avatar-shape="round" avatar-char-count="2" avatar-data='{{currentUserInfo?.displayName}}' ></ngu-letter-avatar>
+                  </div>
+                </ion-avatar>
+          </ng-container>
+          <ng-container *ngIf="!currentUserInfo">
+            <ion-icon name="person"></ion-icon>
+          </ng-container>
+          </button>
+      </ion-buttons>
+
     <ion-title>
       Your Groups
     </ion-title>
+
+    <ion-buttons end>
+        <button ion-button icon-only (click)="goToNewGroup()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <button ion-button (tap)="goToNewGroup()">Create New Group</button>
+  <!-- <button ion-button (click)="goToNewGroup()">Create New Group</button> -->
     
-  <ion-list>
-    <button ion-item *ngFor="let group of groups | async" (tap)="goToGroupDetails(group.key)">
+  <ion-list *ngIf="groups">
+    <button ion-item *ngFor="let group of groups" (click)="goToGroupDetails(group.key)">
       <h2>{{group?.groupName}}</h2>
       <p>{{group?.groupDescription}}</p>
       <ion-row>
@@ -25,7 +49,7 @@
           <ion-col class="group-purchases-info">
             <div>
               <ion-icon name="pricetag"></ion-icon>
-              <ion-badge>2</ion-badge>
+              <ion-badge>{{group?.members?.numPurchases}}</ion-badge>
               <ion-note>purchases</ion-note>
             </div>
           </ion-col>

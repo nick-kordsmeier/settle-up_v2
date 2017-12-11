@@ -35,7 +35,7 @@
           </ion-card>
       </ion-list> -->
 
-      <ion-list>
+      <ion-list *ngIf="anyActiveUsers > 0">
         <ion-list-header>
           Active Settle-up Members
         </ion-list-header>
@@ -57,8 +57,11 @@
       </ion-list>
 
       <ion-list>
-          <ion-list-header>
+          <ion-list-header *ngIf="anyActiveUsers > 0">
             Other Contacts
+          </ion-list-header>
+          <ion-list-header *ngIf="anyActiveUsers === 0">
+            Contacts
           </ion-list-header>
           <ng-container *ngFor="let nativeContact of nativeContacts">
             <ion-item *ngIf="!nativeContact?.activeUser" (tap)="addMember(nativeContact)">
