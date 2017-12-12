@@ -33,4 +33,20 @@ page-groups {
             top: 5px;
         }
     }
+
+    .logo {
+        padding: 15px 10px 10px;
+        width: 60%
+    }
+
+    .no-groups {
+        text-align: center;
+        ion-icon {
+            font-size: 100px;
+        }
+    }
+
+    .recent {
+        margin: 10px auto 5px;
+    }
 }

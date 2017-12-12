@@ -14,8 +14,8 @@ import { GroupDetailsPage } from '../group-details/group-details';
 })
 export class GroupsPage {
 
-
   groups = [];
+  activeGroups = [];
   currentUID;
   groupsObj;
   currentUserInfo;
@@ -36,20 +36,29 @@ export class GroupsPage {
   ionViewDidEnter() {
     this.settleUpProvider.getUserData(this.currentUID).then(uidData => {
       this.currentUserInfo = uidData;
-      console.log(this.currentUserInfo)
-    });
+      console.log(this.currentUserInfo);
+    }).catch(err => { console.error(err) });;
 
-    this.groups = [];
+    this.activeGroups = [];
     this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
       if (activeUserGroupsData !== null) { 
       this.groupsObj = activeUserGroupsData;
       let groupKeys = Object.keys(this.groupsObj);
       for (let i = 0; i < groupKeys.length; i++) {
-        this.groups.push(this.groupsObj[groupKeys[i]]);
+        this.activeGroups.push(this.groupsObj[`${groupKeys[i]}`]);
       }
-      console.log(this.groups);
+      console.log(this.activeGroups);
+      console.log(this.groupsObj);
+
+      this.groups = [];
+      for (let i = 0; i< this.activeGroups.length; i++) {
+        this.settleUpProvider.getGroupDetails(this.activeGroups[i].key).then( groupDetailData => {
+          this.groups.push(groupDetailData);
+        }).catch(err => { console.error(err)});
+        console.log(this.groups);
+      }
     }
-    });    
+    }).catch(err => { console.error(err) });    
   }
 
  

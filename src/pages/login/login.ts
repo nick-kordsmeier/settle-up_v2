@@ -56,8 +56,8 @@ public loading: Loading;
              ]
            });
            alert.present();
-         });
-       });
+         }).catch(err => { console.error(err) });
+       }).catch(err => { console.error(err) });
        this.loading = this.loadingCtrl.create();
        this.loading.present();
      }

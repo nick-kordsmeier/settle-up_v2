@@ -18,10 +18,8 @@
           </button>
       </ion-buttons>
 
-    <ion-title>
-      Your Groups
-    </ion-title>
-
+        <ion-title> <img src="assets/imgs/settle-up_logo.png" alt="Settle Up Logo" class="logo"> </ion-title>
+        
     <ion-buttons end>
         <button ion-button icon-only (click)="goToNewGroup()">
           <ion-icon name="add"></ion-icon>
@@ -31,11 +29,11 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- <button ion-button (click)="goToNewGroup()">Create New Group</button> -->
+  <h1 *ngIf="groups">Your Groups</h1>
     
   <ion-list *ngIf="groups">
     <button ion-item *ngFor="let group of groups" (click)="goToGroupDetails(group.key)">
-      <h2>{{group?.groupName}}</h2>
+      <h1>{{group?.groupName}}</h1>
       <p>{{group?.groupDescription}}</p>
       <ion-row>
           <ion-col class="group-member-info">
@@ -49,14 +47,29 @@
           <ion-col class="group-purchases-info">
             <div>
               <ion-icon name="pricetag"></ion-icon>
-              <ion-badge>{{group?.members?.numPurchases}}</ion-badge>
+              <ion-badge>{{group?.numPurchases}}</ion-badge>
               <ion-note>purchases</ion-note>
             </div>
           </ion-col>
       </ion-row>
+      <div *ngIf="group.mostRecentPurchase" class="recent">
+        <ion-note>Recent </ion-note>
+        {{group?.mostRecentPurchase?.item}} for {{group?.mostRecentPurchase?.price | currency:'USD':"symbol":'1.2-2' }}
+      </div>
+
+      <div *ngIf="!group.mostRecentPurchase" class="recent">
+          <ion-note>No purchases yet. Add a purchase now!</ion-note>          
+      </div>
+
+
     </button>
   </ion-list>
-
+  
+<div *ngIf="!groups" class="no-groups">
+  <ion-icon  isActive="false" name="sad"></ion-icon>
+  <br>
+  <button ion-button clear (click)="goToNewGroup()">No groups yet. Create a group now!</button>
+</div>
 </ion-content>
 
 

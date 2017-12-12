@@ -2,4 +2,24 @@ page-login {
     .invalid {
       border-bottom: 1px solid #FF6153;
     }
+
+    .logo-large {
+      margin: 20px 0px 5px;
+      width: 80%
+  }
+
+  .logo-container {
+    text-align: center;
+    
+  }
+
+  .hr {
+    border-bottom: 1px solid #BFC1C2;
+    width: 65%;
+    margin: 10px auto;
+  }
+
+  // .subtitle {
+  //   font-size: 32px;
+  // }
   }

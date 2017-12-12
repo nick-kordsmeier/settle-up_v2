@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
 import { NewPurchasePage } from '../new-purchase/new-purchase';
+import { PurchaseDetailsPage } from '../purchase-details/purchase-details';
 import { PurchasesPage } from '../purchases/purchases';
 import { AuthProvider } from '../../providers/auth/auth';
 
@@ -18,6 +19,8 @@ export class GroupDetailsPage {
   groupDetails;
   groupMembers;
   activeUserGroupID;
+  purchases;
+  purchasesObj;
 
   constructor(
     public navCtrl: NavController,
@@ -36,13 +39,18 @@ export class GroupDetailsPage {
   ionViewDidEnter() {
     this.settleUpProvider.getUserData(this.currentUID).then(uidData => {
       this.currentUserInfo = uidData;
-    });
+    }).catch(err => { console.error(err) });
 
 
     this.settleUpProvider.getGroupDetails(this.navParams.get("key")).then( groupDetailsData => {
       this.groupDetails = groupDetailsData;
+      console.log(this.groupDetails);
       this.groupMembers = this.groupDetails.members;
-      console.log(this.groupDetails)
+      console.log(this.groupMembers);
+      this.purchasesObj = this.groupDetails.purchases;
+      console.log(this.purchasesObj);
+      
+
 
       for (let i = 0; i < this.groupMembers.length; i++) {
         if (this.groupMembers[i].uid) {
@@ -52,7 +60,19 @@ export class GroupDetailsPage {
         }
       }
       console.log(this.activeUserGroupID);
-    });
+
+      this.purchases = [];
+      if (this.purchasesObj) {
+        console.log(this.purchases);
+        let purchaseKeys = Object.keys(this.purchasesObj);
+        console.log(purchaseKeys);
+        for (let i = 0; i < purchaseKeys.length; i++) {
+          this.purchases.push(this.purchasesObj[purchaseKeys[i]]);
+          console.log(this.purchases);          
+          }
+      }
+
+    }).catch(err => { console.error(err) });;
   }
 
   // switchToPurchasesTab() {
@@ -65,11 +85,18 @@ export class GroupDetailsPage {
     // this.navCtrl.parent.select(2);
     this.navCtrl.push(NewPurchasePage, {key: key});
 
+    
+
   //   this.switchToPurchasesTab().then( () => {
   //     this.navCtrl.parent.select(2)
   //     this.navCtrl.push(NewPurchasePage, {key: key});      
   //   });
   //   // this.navCtrl.parent.select(2).push(NewPurchasePage, {key: key});
   // }
+  }
+
+  goToPurchaseDetails(purchase) {
+    console.log('Purchase Details');
+    this.navCtrl.push(PurchaseDetailsPage, {purchase: purchase});
   }
 }

@@ -56,7 +56,7 @@ export class NewPurchasePage {
       if (this.groupDetails.numPurchases) {
         this.numPurchases = this.groupDetails.numPurchases; 
       } else this.numPurchases = 0;
-    });
+    }).catch(err => { console.error(err) });;
 
         
     this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
@@ -67,7 +67,7 @@ export class NewPurchasePage {
       }
       console.log(this.groups);
 
-    });
+    }).catch(err => { console.error(err) });;
   }
 
   onSaveNewPurchase() {

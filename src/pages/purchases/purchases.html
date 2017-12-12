@@ -19,9 +19,8 @@
       </ion-buttons>
 
 
-    <ion-title>
-      Purchases
-    </ion-title>
+      <ion-title> <img src="assets/imgs/settle-up_logo.png" alt="Settle Up Logo" class="logo"> </ion-title>
+      
 
     <ion-buttons end>
         <button ion-button icon-only (click)="goToNewPurchase()">
@@ -32,5 +31,49 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- <button ion-button (click)="goToNewPurchase()">Add New Purchase</button> -->
+    <h1 *ngIf="purchases">Your Purchases</h1>
+
+    <ion-list *ngIf="purchases">
+        <button ion-item *ngFor="let purchase of purchases" (click)="goToPurchaseDetails(purchase)"> <!--FIX-->
+          <ion-avatar>
+            <div class="purchase-price-shape">
+              <div class="purchase-price-content">
+                  <span>{{purchase?.price | currency:'USD':"symbol":'1.2-2'}}</span>                  
+              </div>
+            </div>
+          </ion-avatar>
+          <h1>{{purchase?.item}}</h1>
+          <p>{{purchase?.groupName}}</p>
+
+          <!-- <ion-row>
+              <ion-col class="group-member-info">
+                <div>
+                  <ion-icon name="people" style="font-size:25px"></ion-icon>
+                  <ion-badge>{{group?.members?.length}}</ion-badge>
+                  <ion-note>members</ion-note>
+                </div>
+              </ion-col>
+    
+              <ion-col class="group-purchases-info">
+                <div>
+                  <ion-icon name="pricetag"></ion-icon>
+                  <ion-badge>{{group?.numPurchases}}</ion-badge>
+                  <ion-note>purchases</ion-note>
+                </div>
+              </ion-col>
+          </ion-row> -->
+          <!-- <div *ngIf="group.mostRecentPurchase" class="recent">
+            <ion-note>Recent </ion-note>
+            {{group?.mostRecentPurchase?.item}} for {{group?.mostRecentPurchase?.price | currency:'USD':"symbol":'1.2-2' }}
+          </div>
+    
+          <div *ngIf="!group.mostRecentPurchase" class="recent">
+              <ion-note>No purchases yet. Add a purchase now!</ion-note>          
+          </div> -->
+    
+    
+        </button>
+      </ion-list>
+
+
 </ion-content>

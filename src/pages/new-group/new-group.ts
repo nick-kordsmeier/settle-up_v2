@@ -158,8 +158,8 @@ export class NewGroupPage {
                     }
                     console.log("this.groupMembers after loops = ");
                     console.log(this.groupMembers);
-                    });
-                  });
+                    }).catch(err => { console.error(err) });;
+                  }).catch(err => { console.error(err) });;
 
 
 

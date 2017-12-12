@@ -1,0 +1,47 @@
+
+<ion-header>
+
+  <ion-navbar>
+      <ion-title> <img src="assets/imgs/settle-up_logo.png" alt="Settle Up Logo" class="logo"> </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-item class="required">
+        <div class="label">Group:</div>
+        <div class="value">{{purchase?.groupName}}</div>
+      </ion-item>
+
+      <ion-item class="required">
+          <div class="label">Item:</div>
+          <div class="value">{{purchase?.item}}</div>
+        </ion-item>
+      <ion-item class="required">
+          <div class="label">Price:</div>
+          <div class="value">{{purchase?.price | currency:'USD':"symbol":'1.2-2'}}</div>
+        </ion-item>
+      <ion-item>
+          <div class="label">Description:</div>
+          <div class="purchase-description">{{purchase?.purchaseDescription}}</div>
+      </ion-item>
+      <ion-item>
+          <div class="label">For Who?</div>
+          <div class="value">{{purchase?.forWho}}</div>
+        </ion-item>
+      <ion-item>
+          <div class="label">Occasion:</div>
+          <div class="value">{{purchase?.occasion}}</div>
+        </ion-item>
+      <ion-item>
+          <div class="label">Date Purchased:</div>
+          <div class="value">{{purchase?.datePurchased}}</div>
+        </ion-item>
+      <ion-item>
+          <div class="label">Bought From:</div>
+          <div class="value">{{purchase?.boughtFrom}}</div>
+        </ion-item>
+
+</ion-content>

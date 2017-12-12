@@ -18,6 +18,7 @@ import { NewPurchasePage } from '../pages/new-purchase/new-purchase';
 import { GroupDetailsPage } from '../pages/group-details/group-details';
 import { PopoverMenuComponent } from '../components/popover-menu/popover-menu';
 import { AddMoreMembersModalComponent } from '../components/add-more-members-modal/add-more-members-modal';
+import { PurchaseDetailsPage } from '../pages/purchase-details/purchase-details';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -53,7 +54,8 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
     NewGroupPage,
     NewPurchasePage,
     AddMoreMembersModalComponent,
-    PopoverMenuComponent
+    PopoverMenuComponent,
+    PurchaseDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ import { NativeContactsProvider } from '../providers/native-contacts/native-cont
     NewGroupPage,
     NewPurchasePage,
     AddMoreMembersModalComponent,
-    PopoverMenuComponent
+    PopoverMenuComponent,
+    PurchaseDetailsPage
   ],
   providers: [
     StatusBar,

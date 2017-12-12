@@ -1,13 +1,14 @@
 <ion-header>
   
     <ion-navbar>
-      <ion-title>Sign Up!</ion-title>
+        <ion-title> <img src="assets/imgs/settle-up_logo.png" alt="Settle Up Logo" class="logo"> </ion-title>
     </ion-navbar>
   
   </ion-header>
   
   
   <ion-content padding>
+    <h1>Sign Up!</h1>
     <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
         <ion-item>
             <ion-label stacked>First Name</ion-label>
@@ -37,7 +38,7 @@
         </ion-input>
       </ion-item>
         
-      <button ion-button block type="submit" [disabled]="!signupForm.valid">
+      <button style="margin:10px auto 0px;" ion-button block type="submit" [disabled]="!signupForm.valid">
         Create an Account
       </button>
     </form>

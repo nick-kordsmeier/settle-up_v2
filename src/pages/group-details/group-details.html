@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Group Details</ion-title>
+      <ion-title> <img src="assets/imgs/settle-up_logo.png" alt="Settle Up Logo" class="logo"> </ion-title>
     <ion-buttons end>
         <button ion-button icon-only (click)="goToNewPurchase(groupDetails?.key)">
           <ion-icon name="add"></ion-icon>
@@ -14,10 +14,11 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
   <ng-container *ngIf="groupDetails">
-      <ion-label stacked>Group Name:</ion-label>
-      <div class="group-name">{{groupDetails?.groupName}}</div>
+      <div style="padding: 16px 16px 0px 16px;">
+      <h1>{{groupDetails?.groupName}}</h1>
 
       <ion-label *ngIf="groupDetails?.groupDescription" stacked>Description:</ion-label>
       <div class="group-details">
@@ -28,7 +29,6 @@
         <button ion-button (click)="goToNewPurchase(groupDetails?.key)">Add New Purchase</button>
       </div> -->
           
-    <br>
     <h3>Your Balances</h3>
     <ion-list>
       <ng-container *ngFor="let groupMember of groupMembers">
@@ -47,18 +47,41 @@
               <ion-col>
                 <div class="balances">
                   <ion-icon *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] < 0" name="arrow-round-up"></ion-icon>
-                  <ion-icon *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] > 0" name="arrow-round-up"></ion-icon>
+                  <ion-icon *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] > 0" name="arrow-round-down"></ion-icon>
                   <ion-icon *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] === 0" name="happy" isActive="false"></ion-icon>
-                  <span *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] < 0">owes you {{groupMember[groupMember.groupID + '-' + activeUserGroupID] * -1 | currency:'USD':"symbol":'1.2-2'}}</span>
+                  <span *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] < 0">Owes you {{groupMember[groupMember.groupID + '-' + activeUserGroupID] * -1 | currency:'USD':"symbol":'1.2-2'}}</span>
                   <span *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] > 0">You owe {{groupMember[groupMember.groupID + '-' + activeUserGroupID] * -1 | currency:'USD':"symbol":'1.2-2'}}</span>
                   <span *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] === 0">All Settled Up!</span>
                 </div>
-              </ion-col>    
+              </ion-col>
           </ion-row>
-
         </ion-item>
       </ng-container>
-
     </ion-list>
+  </div>
+  <h3 style="padding:0px 16px;" *ngIf="purchases.length" >Group Purchases</h3>
+    <ion-list *ngIf="purchases.length" style="padding: 0px !important;">
+      <ion-item style="padding: 0px !important;">
+        <ion-row>
+          <ion-item no-lines>
+            <ion-scroll zoom="false" scrollX="true">
+                <div *ngFor="let purchase of purchases" class="square-purchases" (click)="goToPurchaseDetails(purchase)">
+                    <div class="square-purchases-content">
+                        <span class="price">{{purchase?.price | currency:'USD':"symbol":'1.2-2'}}</span>
+                        <span class="item">{{purchase?.item}}</span>
+                    </div>
+                </div>
+            </ion-scroll>
+          </ion-item>
+        </ion-row>
+      </ion-item>
+      </ion-list>
+
+      <div *ngIf="!purchases.length" class="no-purchases">
+          <ion-icon  isActive="false" name="sad"></ion-icon>
+          <br>
+          <button ion-button clear (click)="goToNewPurchase(groupDetails?.key)">No purchases yet. Add a purchase now!</button>
+      </div>
+
   </ng-container>
 </ion-content>

@@ -1,10 +1,9 @@
 page-group-details {
-    .group-name {
-        font-size: 1.5em;
-        font-weight: bold;
+    // .group-name {
+    //     font-size: 1.5em;
+    //     font-weight: bold;
 
-    }
-
+    // }
     .group-details {
         font-size: 1.25em;
         word-wrap: normal;
@@ -22,8 +21,57 @@ page-group-details {
         margin-left: 7px;
     }
 
-    ion-note {
-        font-size: 0.75em;
+    .square-purchases{
+        border: 0px solid #6DBCDB;        
+        background: #2C3E50;
+        position: relative;
+        text-align: center;
+        width: 120px;
+        height: 120px;
+        display: inline-block;
+        margin: 0px 10px 0px;
+        // overflow-y: auto;
+      }
+
+      .square-purchases-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        color: #D7DADB;
+        // font-size: 2em;
+        padding-top: 25%;
+
+        .price {
+            font-size: 25px;
+        }
+
+        .item {
+            font-size: 12px;
+        }
+      }
+
+      ion-scroll[scrollX] {
+        white-space: nowrap;
+        height: 125px;
+        overflow: hidden;
+        margin: 0px;
+        padding: 0px;
+
+        .scroll-item {
+          display: inline-block;
+        }        
+      }
+
+      .no-purchases{
+        text-align: center;
+        ion-icon {
+            font-size: 100px;
+        }
+      }
+
+      .logo {
+        padding: 15px 10px 10px;
+        width: 60%
     }
 
 }

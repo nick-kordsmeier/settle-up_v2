@@ -32,7 +32,7 @@ export class DashboardPage {
     this.settleUpProvider.getUserData(this.currentUID).then(uidData => {
       this.currentUserInfo = uidData;
       console.log(this.currentUserInfo)
-    });
+    }).catch(err => { console.error(err) });;
 
     // this.groups = [];
     // this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {

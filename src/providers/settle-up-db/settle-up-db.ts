@@ -31,12 +31,15 @@ export class SettleUpDbProvider {
 
   pushNewPurchase(groupKey, newPurchaseObject, numPurchases, uid, groupMembers): void {
     // Push new purchase object data to firebase.
-    const newPurchaseRef = this.afDatabase.list("/Groups/" + groupKey + "/Purchases").push({});
+    const newPurchaseRef = this.afDatabase.list("/Groups/" + groupKey + "/purchases").push({});
     newPurchaseRef.set(newPurchaseObject);
     newPurchaseRef.child("key").set(newPurchaseRef.key);
 
     // Add to the group numPurchases variable.
     this.afDatabase.object("/Groups/" + groupKey + "/numPurchases").set(numPurchases);
+
+    // Keep track of most recent purchase.
+    this.afDatabase.object("/Groups/" + groupKey + "/mostRecentPurchase").set(newPurchaseObject);
 
   }
 
@@ -50,6 +53,14 @@ export class SettleUpDbProvider {
     });
   });
   }
+
+  // getPurchaseDetails(groupKey, purchaseKey) {
+  //   return new Promise (resolve => {this.afDatabase.object("/Groups/" + groupKey + "/purchases/" + purchaseKey).valueChanges().subscribe(data => {
+  //     resolve(data);
+  //   });
+  // });
+  // }
+
 
   getUserData(uid) {
     return new Promise (resolve => {this.afDatabase.object("/userProfile/" + uid).valueChanges().subscribe(data => {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, PopoverController } from 'ionic-angular';
 
 import { NewPurchasePage } from '../new-purchase/new-purchase';
+import { PurchaseDetailsPage } from '../purchase-details/purchase-details';
 import { PopoverMenuComponent } from '../../components/popover-menu/popover-menu'
 import { AuthProvider } from '../../providers/auth/auth';
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
@@ -14,7 +15,10 @@ import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
 export class PurchasesPage {
   currentUID;
   currentUserInfo;
-  
+  activeGroups;
+  groupsObj;
+  groups;
+  purchases;
 
   constructor(
     public navCtrl: NavController,
@@ -33,19 +37,40 @@ export class PurchasesPage {
     this.settleUpProvider.getUserData(this.currentUID).then(uidData => {
       this.currentUserInfo = uidData;
       console.log(this.currentUserInfo)
-    });
+    }).catch(err => { console.error(err) });
 
-    // this.groups = [];
-    // this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
-    //   if (activeUserGroupsData !== null) { 
-    //   this.groupsObj = activeUserGroupsData;
-    //   let groupKeys = Object.keys(this.groupsObj);
-    //   for (let i = 0; i < groupKeys.length; i++) {
-    //     this.groups.push(this.groupsObj[groupKeys[i]]);
-    //   }
-    //   console.log(this.groups);
-    // }
-    // });
+    this.activeGroups = [];
+    this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
+      if (activeUserGroupsData !== null) { 
+      this.groupsObj = activeUserGroupsData;
+      let groupKeys = Object.keys(this.groupsObj);
+      for (let i = 0; i < groupKeys.length; i++) {
+        this.activeGroups.push(this.groupsObj[`${groupKeys[i]}`]);
+      }
+      console.log(this.groupsObj);
+      console.log(this.activeGroups);
+
+      this.groups = [];
+      this.purchases = [];
+      for (let i = 0; i< this.activeGroups.length; i++) {
+        this.settleUpProvider.getGroupDetails(this.activeGroups[i].key).then( groupDetailData => {
+          this.groups.push(groupDetailData);
+
+          if (this.groups[i].purchases) {
+          let purchasesKeys = Object.keys(this.groups[i].purchases);
+          console.log(purchasesKeys);
+          for (let k = 0; k < purchasesKeys.length; k++) {
+            this.purchases.push(this.groups[i].purchases[`${purchasesKeys[k]}`]);
+          }
+        }
+        }).catch(err => { console.error(err)});
+        console.log(this.groups);
+        console.log(this.purchases);
+      }
+    }
+    }).catch(err => { console.error(err) });
+
+
   }
 
   goToNewPurchase() {
@@ -61,4 +86,21 @@ export class PurchasesPage {
     });
   }
 
+  goToPurchaseDetails(purchase) {
+    console.log('Purchase Details');
+    this.navCtrl.push(PurchaseDetailsPage, {purchase: purchase});
+  }
+
 }
+
+    // this.groups = [];
+    // this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
+    //   if (activeUserGroupsData !== null) { 
+    //   this.groupsObj = activeUserGroupsData;
+    //   let groupKeys = Object.keys(this.groupsObj);
+    //   for (let i = 0; i < groupKeys.length; i++) {
+    //     this.groups.push(this.groupsObj[groupKeys[i]]);
+    //   }
+    //   console.log(this.groups);
+    // }
+    // });
