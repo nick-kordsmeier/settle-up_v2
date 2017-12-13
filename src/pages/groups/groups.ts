@@ -58,6 +58,10 @@ export class GroupsPage {
         console.log(this.groups);
       }
     }
+    else {
+      this.groups = [];
+      console.log(this.groups);
+    }
     }).catch(err => { console.error(err) });    
   }
 

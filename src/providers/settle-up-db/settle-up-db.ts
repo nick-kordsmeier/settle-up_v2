@@ -40,6 +40,7 @@ export class SettleUpDbProvider {
 
     // Keep track of most recent purchase.
     this.afDatabase.object("/Groups/" + groupKey + "/mostRecentPurchase").set(newPurchaseObject);
+    console.log("running pushNewPurchase()")
 
   }
 

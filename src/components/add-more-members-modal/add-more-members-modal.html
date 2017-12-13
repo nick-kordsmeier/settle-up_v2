@@ -41,7 +41,7 @@
         </ion-list-header>
         <ion-item-group *ngFor="let nativeContact of nativeContacts">
             <ng-container *ngIf="nativeContact?.activeUser">
-              <ion-item-divider light>{{nativeContact?.name.familyName.charAt(0)}}</ion-item-divider>
+              <ion-item-divider light>{{nativeContact?.name.givenName.charAt(0)}}</ion-item-divider>
               <ion-item (click)="addMember(nativeContact)">
                 <!-- <ion-avatar item-start *ngIf="nativeContact.photos">
                     <img src="{{nativeContact?.photos[0].value}}">
@@ -50,9 +50,10 @@
                     <!-- <ion-avatar item-start>                    
                       <ngu-letter-avatar avatar-font-size="25px" avatar-shape="round" avatar-char-count="2" avatar-data='{{nativeContact?.name.givenName}} {{nativeContact?.name.familyName}}'></ngu-letter-avatar>              
                     </ion-avatar> -->
-                <h2>
+                <h2 *ngIf="nativeContact?.name.givenName">
                   {{nativeContact?.name.givenName}} {{nativeContact?.name.familyName}}
                 </h2>
+                <h2 *ngIf="!nativeContact?.name.givenName && nativeContact?.emails[0].value">{{nativeContact?.emails[0].value}}</h2>
                 <ion-icon *ngIf="nativeContact?.selected" name="checkmark-circle" item-end></ion-icon>
               </ion-item>
           </ng-container>
@@ -68,7 +69,7 @@
           </ion-list-header>
           <ion-item-group *ngFor="let nativeContact of nativeContacts">
             <ng-container *ngIf="!nativeContact?.activeUser">
-              <ion-item-divider light>{{nativeContact?.name.familyName.charAt(0)}}</ion-item-divider>
+              <ion-item-divider light>{{nativeContact?.name.givenName.charAt(0)}}</ion-item-divider>
               <ion-item (click)="addMember(nativeContact)">
                 <!-- <ion-avatar item-start *ngIf="nativeContact.photos">
                     <img src="{{nativeContact?.photos[0].value}}">

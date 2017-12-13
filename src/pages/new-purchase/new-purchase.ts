@@ -81,7 +81,8 @@ export class NewPurchasePage {
       occasion: this.occasionVal,
       boughtFrom: this.boughtFromVal,
       datePurchased: this.datePurchasedVal,
-      dateAdded: today.getTime(),
+      dateAddedNum: today.getTime(),
+      dateAdded: new Date(),
       addedByUID: this.currentUID,
       addedByName: this.currentUserInfo.displayName,
       groupName: this.groupVal,
@@ -123,11 +124,11 @@ export class NewPurchasePage {
       }
     }
 
-    this.updateBalances();
+    this.updateBalances(this.groupDetails.key, this.groupMembers);
   }
 
-  updateBalances() {
-    this.settleUpProvider.updateBalances(this.groupDetails.key, this.groupMembers);;
+  updateBalances(groupDetailsKey, groupMembers) {
+    this.settleUpProvider.updateBalances(groupDetailsKey, groupMembers);;
   }
 
 

@@ -187,9 +187,9 @@ rawNativeContacts = [];
   }
 
   compare(obj1, obj2) {
-    if (obj1.name.familyName < obj2.name.familyName)
+    if (obj1.name.givenName < obj2.name.givenName)
       return -1;
-    if (obj1.name.familyName > obj2.name.familyName)
+    if (obj1.name.givenName > obj2.name.givenName)
       return 1;
     return 0;
   }

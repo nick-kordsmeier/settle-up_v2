@@ -94,11 +94,15 @@ export class PurchasesPage {
   }
 
   compare(obj1, obj2) {
-    if (obj1.key < obj2.key)
+    if (obj1.dateAddedNum < obj2.dateAddedNum)
       return -1;
-    if (obj1.key > obj2.key)
+    if (obj1.dateAddedNum > obj2.dateAddedNum)
       return 1;
     return 0;
+  }
+
+  goToGroupsPage() {
+    this.navCtrl.parent.select(1);
   }
 
 }

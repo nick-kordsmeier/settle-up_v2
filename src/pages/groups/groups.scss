@@ -3,6 +3,10 @@ page-groups {
     ion-note {
         font-size: 0.75em;
     }
+    .recent-note {
+        margin: 5px 5px 0px 0px;
+        float:left;
+    }
 
     .group-member-info {
         ion-label {
@@ -47,6 +51,13 @@ page-groups {
     }
 
     .recent {
-        margin: 10px auto 5px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        max-width: 50%;
+        float: left;
+        margin: 0px 5px 0px 0px;
+
     }
+
 }

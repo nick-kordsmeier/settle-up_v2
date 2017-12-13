@@ -29,7 +29,7 @@
 </ion-header>
 
 <ion-content padding>
-  <h1 *ngIf="groups">Your Groups</h1>
+  <h1 *ngIf="groups.length > 0 && groups">Your Groups</h1>
     
   <ion-list *ngIf="groups">
     <button ion-item *ngFor="let group of groups" (click)="goToGroupDetails(group.key)">
@@ -43,7 +43,6 @@
               <ion-note>members</ion-note>
             </div>
           </ion-col>
-
           <ion-col class="group-purchases-info">
             <div>
               <ion-icon name="pricetag"></ion-icon>
@@ -52,23 +51,20 @@
             </div>
           </ion-col>
       </ion-row>
-      <div *ngIf="group.mostRecentPurchase" class="recent">
-        <ion-note>Recent </ion-note>
-        {{group?.mostRecentPurchase?.item}} for {{group?.mostRecentPurchase?.price | currency:'USD':"symbol":'1.2-2' }}
+      <div *ngIf="group.mostRecentPurchase">
+        <ion-note class="recent-note">Recent</ion-note>
+        <div class="recent">{{group?.mostRecentPurchase?.item}}</div><div>for {{group?.mostRecentPurchase?.price | currency:'USD':"symbol":'1.2-2' }}</div>
       </div>
-
-      <div *ngIf="!group.mostRecentPurchase" class="recent">
+      <div *ngIf="!group.mostRecentPurchase" class="no-purchases">
           <ion-note>No purchases yet. Add a purchase now!</ion-note>          
       </div>
-
-
     </button>
   </ion-list>
   
-<div *ngIf="!groups" class="no-groups">
+<div *ngIf="groups.length === 0 || !groups">
   <ion-icon  isActive="false" name="sad"></ion-icon>
   <br>
-  <button ion-button clear (click)="goToNewGroup()">No groups yet. Create a group now!</button>
+  <button ion-button clear (click)="goToNewGroup()">No groups yet. Create one now!</button>
 </div>
 </ion-content>
 

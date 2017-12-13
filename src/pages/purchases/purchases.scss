@@ -31,4 +31,14 @@ page-purchases {
       ion-avatar {
           float:left;
       }
+
+
+    .no-purchases {
+        text-align: center;
+
+        ion-icon {
+            margin: 31px 0px 0px 0px;
+            font-size: 100px;
+        }
+    }
 }
