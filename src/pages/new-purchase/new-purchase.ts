@@ -72,6 +72,7 @@ export class NewPurchasePage {
 
   onSaveNewPurchase() {
     const today = new Date();
+    console.log(today);
     const newPurchaseObj = {
       item: this.itemVal,
       purchaseDescription: this.descriptionVal,
@@ -80,7 +81,7 @@ export class NewPurchasePage {
       occasion: this.occasionVal,
       boughtFrom: this.boughtFromVal,
       datePurchased: this.datePurchasedVal,
-      dateAdded: today,
+      dateAdded: today.getTime(),
       addedByUID: this.currentUID,
       addedByName: this.currentUserInfo.displayName,
       groupName: this.groupVal,

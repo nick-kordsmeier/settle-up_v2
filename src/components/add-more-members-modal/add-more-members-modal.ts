@@ -26,6 +26,7 @@ deSelectedContacts = [];
 nativeContacts;
 numberSelected = 0;
 anyActiveUsers;
+rawNativeContacts = [];
 
   constructor(
     public viewCtrl: ViewController,
@@ -97,10 +98,14 @@ anyActiveUsers;
   ionViewDidLoad() {
     this.anyActiveUsers = 0;
     
-    this.nativeContacts = [];
+    this.rawNativeContacts = [];
     for (let i = 0; i < this.nativeContactsProvider.nativeContactsList.length; i++) {
-      this.nativeContacts.push(this.nativeContactsProvider.nativeContactsList[i]._objectInstance);
+      this.rawNativeContacts.push(this.nativeContactsProvider.nativeContactsList[i]._objectInstance);
     }
+
+    this.nativeContacts = this.rawNativeContacts.sort(this.compare);
+    console.log(this.nativeContacts)
+
   }
 
   ionViewDidEnter() {
@@ -181,7 +186,17 @@ anyActiveUsers;
     this.viewCtrl.dismiss();
   }
 
+  compare(obj1, obj2) {
+    if (obj1.name.familyName < obj2.name.familyName)
+      return -1;
+    if (obj1.name.familyName > obj2.name.familyName)
+      return 1;
+    return 0;
+  }
+
 }
+
+
 
       // this.nativeContacts[i].push({
       //   "givenName": nativeContactsProvider.nativeContactsList[i].givenName,

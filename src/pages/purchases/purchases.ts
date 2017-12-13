@@ -19,6 +19,7 @@ export class PurchasesPage {
   groupsObj;
   groups;
   purchases;
+  sortedPurchases;
 
   constructor(
     public navCtrl: NavController,
@@ -67,6 +68,9 @@ export class PurchasesPage {
         console.log(this.groups);
         console.log(this.purchases);
       }
+
+      this.sortedPurchases = this.purchases.sort(this.compare);
+      console.log(this.sortedPurchases)
     }
     }).catch(err => { console.error(err) });
 
@@ -87,6 +91,14 @@ export class PurchasesPage {
   goToPurchaseDetails(purchase) {
     console.log('Purchase Details');
     this.navCtrl.push(PurchaseDetailsPage, {purchase: purchase});
+  }
+
+  compare(obj1, obj2) {
+    if (obj1.key < obj2.key)
+      return -1;
+    if (obj1.key > obj2.key)
+      return 1;
+    return 0;
   }
 
 }

@@ -220,6 +220,7 @@ addToGroupMembersArray(selectedContact, selectedActiveUser) {
           console.log("groupMembers within if activeuser loop")
           console.log(groupMembers);
         } else {
+          this.groupIDCounter++ // Add one for each additional selected user.          
           groupMembers.push({
             displayName: selectedContact.name.givenName + " " + selectedContact.name.familyName,
             admin: false,

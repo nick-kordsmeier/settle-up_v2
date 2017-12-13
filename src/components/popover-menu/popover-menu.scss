@@ -6,8 +6,9 @@ popover-menu {
         
 
         .image {
-            width: 40% !important; 
-            height: 40% !important;
+            width: 50px;
+            // width: 50% !important; 
+            // height: 50% !important;
         }
 
         .letter {
@@ -17,6 +18,7 @@ popover-menu {
     }
 
     .user-info {
+        text-align: left;
         margin: 8px 0px 0px 10px;
         overflow: hidden;
 
