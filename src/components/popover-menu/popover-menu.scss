@@ -1,3 +1,59 @@
-popover-menu {
+popover-menu {    
+    ion-avatar {
+        margin: 0px 10px 0px 8px;
+        float: left;
+        padding: 0px;
+        
 
-}
+        .image {
+            width: 40% !important; 
+            height: 40% !important;
+        }
+
+        .letter {
+            width: 100% !important; 
+            height: 100% !important;
+        }
+    }
+
+    .user-info {
+        margin: 8px 0px 0px 10px;
+        overflow: hidden;
+
+        .username {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .email {
+            font-size: 16px;
+
+
+        }
+        
+    }
+    .buttons {
+        margin: 15px 0px 0px 0px;
+        
+        .logout {
+            text-align: right;
+            
+            button {
+                margin: 0px 10px 15px 0px;
+            }
+
+        }
+
+        .close {
+            text-align: left;
+
+            button {
+                margin: 0px 10px 15px 0px;
+            }
+
+        }
+    }
+
+
+    }
+

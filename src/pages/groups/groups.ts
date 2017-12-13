@@ -71,12 +71,10 @@ export class GroupsPage {
     this.navCtrl.push(GroupDetailsPage, {key: key});
   }
   
-  presentPopover(ev: UIEvent) {
-    let popover = this.popoverCtrl.create(PopoverMenuComponent);
+  presentPopover(ev: UIEvent, currentUserInfo) {
+    let popover = this.popoverCtrl.create(PopoverMenuComponent, {currentUserInfo: currentUserInfo}, {cssClass: "popover-menu"});
 
-    popover.present({
-      ev: ev
-    });
+    popover.present({ev: ev});
   }
 
 }

@@ -1,3 +1,26 @@
+<ng-container *ngIf="currentUserInfo">
+      <div>
+      <ion-avatar *ngIf="currentUserInfo?.photoURL">
+          <img class="image" src="{{currentUserInfo?.photoURL}}">
+      </ion-avatar>
+      <ion-avatar *ngIf="!currentUserInfo?.photoURL">
+        <div class="letter">
+          <ngu-letter-avatar avatar-shape="round" avatar-char-count="2" avatar-data='{{currentUserInfo?.displayName}}' ></ngu-letter-avatar>
+        </div>
+      </ion-avatar>
+      </div>
+      <div class="user-info">
+            <div class="username">{{currentUserInfo?.displayName}}</div>
+            <div class="email">{{currentUserInfo?.email}}</div>
+      </div>
+      
+</ng-container>
 
-      <button ion-item no-lines (click)="logout()">Logout</button>
-      <button ion-item no-lines (click)="close()">Cancel</button>
+      <ion-row class="buttons">
+            <ion-col class="logout">
+                  <button small ion-button detail-none no-lines (click)="logout()">Logout</button>
+            </ion-col>
+            <ion-col class="close">
+                  <button small ion-button detail-none no-lines (click)="close()">Cancel</button>
+            </ion-col>
+      </ion-row>

@@ -68,6 +68,7 @@
                 <div *ngFor="let purchase of purchases" class="square-purchases" (click)="goToPurchaseDetails(purchase)">
                     <div class="square-purchases-content">
                         <span class="price">{{purchase?.price | currency:'USD':"symbol":'1.2-2'}}</span>
+                        <br>
                         <span class="item">{{purchase?.item}}</span>
                     </div>
                 </div>
