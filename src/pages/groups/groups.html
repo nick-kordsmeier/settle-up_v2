@@ -31,7 +31,7 @@
 <ion-content padding>
   <h1 *ngIf="groups.length > 0 && groups">Your Groups</h1>
     
-  <ion-list *ngIf="groups">
+  <ion-list *ngIf="groups.length > 0 && groups">
     <button ion-item *ngFor="let group of groups" (click)="goToGroupDetails(group.key)">
       <h1>{{group?.groupName}}</h1>
       <p>{{group?.groupDescription}}</p>
@@ -61,7 +61,7 @@
     </button>
   </ion-list>
   
-<div *ngIf="groups.length === 0 || !groups">
+<div class="no-groups" *ngIf="groups.length === 0 || !groups">
   <ion-icon  isActive="false" name="sad"></ion-icon>
   <br>
   <button ion-button clear (click)="goToNewGroup()">No groups yet. Create one now!</button>

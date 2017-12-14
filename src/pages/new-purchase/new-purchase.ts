@@ -51,23 +51,25 @@ export class NewPurchasePage {
       this.groupDetails = groupDetailData;
       this.groupMembers = this.groupDetails.members;
       this.groupVal = this.groupDetails.groupName;
+      console.log("group details")
       console.log(this.groupDetails);
 
       if (this.groupDetails.numPurchases) {
         this.numPurchases = this.groupDetails.numPurchases; 
       } else this.numPurchases = 0;
-    }).catch(err => { console.error(err) });;
+    }).catch(err => { console.error(err) });
 
         
     this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
       this.groupsObj = activeUserGroupsData;
       let groupKeys = Object.keys(this.groupsObj);
+      this.groups = [];
       for (let i = 0; i < groupKeys.length; i++) {
         this.groups.push(this.groupsObj[groupKeys[i]]);
       }
       console.log(this.groups);
 
-    }).catch(err => { console.error(err) });;
+    }).catch(err => { console.error(err) });
   }
 
   onSaveNewPurchase() {
@@ -97,8 +99,8 @@ export class NewPurchasePage {
     this.navCtrl.pop();
 
     // Update each group members' balances.
-    let purchaserIndex = groupMembers.findIndex(element => element["uid"] === uid);
-    console.log(purchaserIndex);
+    // let purchaserIndex = groupMembers.findIndex(element => element["uid"] === uid);
+    // console.log(purchaserIndex);
     let purchasePrice = newPurchaseObj.price;
     console.log(purchasePrice);
     let numMembers = this.groupMembers.length;
@@ -107,28 +109,28 @@ export class NewPurchasePage {
 
     for (let i = 0; i < numMembers; i ++) {
       for (let j = 0; j < numMembers; j++) {
-        if (i === purchaserIndex) {
-          if (i !== j) {
+        if (this.groupMembers[i].uid === this.currentUID) {
+          if (this.groupMembers[i].uid !== this.groupMembers[j].uid) {
             console.log("Before")
-            console.log(this.groupMembers[i][`${i}-${j}`]);
-            this.groupMembers[i][`${i}-${j}`] += (purchasePrice/numMembers)
+            console.log(this.groupMembers[i][`${this.groupMembers[i].uid}-${this.groupMembers[j].uid}`]);
+            this.groupMembers[i][`${this.groupMembers[i].uid}-${this.groupMembers[j].uid}`] += (purchasePrice/numMembers)
             console.log("After")
-            console.log(this.groupMembers[i][`${i}-${j}`]);
+            console.log(this.groupMembers[i][`${this.groupMembers[i].uid}-${this.groupMembers[j].uid}`]);
           }
         }
       }
-      if (i !== purchaserIndex) {
-        this.groupMembers[i][`${i}-${purchaserIndex}`] -= (purchasePrice/numMembers)
+      if (this.groupMembers[i].uid !== this.currentUID) {
+        this.groupMembers[i][`${this.groupMembers[i].uid}-${this.currentUID}`] -= (purchasePrice/numMembers)
         console.log("If subtracting");
-        console.log(this.groupMembers[i][`${i}-${purchaserIndex}`]);
+        console.log(this.groupMembers[i][`${this.groupMembers[i].uid}-${this.currentUID}`]);
       }
     }
 
-    this.updateBalances(this.groupDetails.key, this.groupMembers);
+    this.updateBalances(this.groupDetails.key, this.groupMembers, purchasePrice, numMembers, this.currentUID);
   }
 
-  updateBalances(groupDetailsKey, groupMembers) {
-    this.settleUpProvider.updateBalances(groupDetailsKey, groupMembers);;
+  updateBalances(groupDetailsKey, groupMembers, purchasePrice, numMembers, currentUID) {
+    this.settleUpProvider.updateBalances(groupDetailsKey, groupMembers, purchasePrice, numMembers, currentUID);
   }
 
 

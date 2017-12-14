@@ -3,4 +3,58 @@ page-dashboard {
         padding: 15px 10px 10px;
         width: 60%
     }
+
+    .balances ion-icon {
+        font-size: 30px;
+        position: relative;
+        top: 5px;
+
+    }
+
+    .your-friends-owe-shape {
+        border-radius:50%;
+        background: #0071BC;
+        position: relative;
+        text-align: center;
+        width: 85%;
+        // height: 40%;
+        display: inline-block;
+        margin: 0px 10px 0px;
+        line-height: 0;
+
+      }
+
+    .your-friends-owe-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        color: #D7DADB;
+        margin: 50% 0;
+        font-size: 25px;
+
+      }
+
+
+    .you-owe-shape {
+        border-radius:50%;
+        background: #FF5D2F;
+        position: relative;
+        text-align: center;
+        width: 85%;
+        // height: 40%;
+        display: inline-block;
+        margin: 0px 10px 0px;
+        line-height: 0;
+
+      }
+
+    .you-owe-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        color: #D7DADB;
+        margin: 50% 0;
+        font-size: 25px;
+
+      }
 }

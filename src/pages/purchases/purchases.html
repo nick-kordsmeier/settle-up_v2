@@ -31,9 +31,9 @@
 </ion-header>
 
 <ion-content padding>
-    <h1 *ngIf="purchases !== [] && purchases">Your Purchases</h1>
+  <h1 *ngIf="purchases.length > 0 && purchases">Your Purchases</h1>
 
-    <ion-list *ngIf="purchases">
+    <ion-list *ngIf="purchases.length > 0 && purchases">
         <button ion-item *ngFor="let purchase of purchases" (click)="goToPurchaseDetails(purchase)"> <!--FIX-->
           <ion-avatar>
             <div class="purchase-price-shape">
@@ -75,7 +75,7 @@
         </button>
       </ion-list>
 
-      <div *ngIf="purchases === [] || !purchases" class="no-purchases">
+      <div *ngIf="purchases.length === 0 || !purchases" class="no-purchases">
           <ion-icon  isActive="false" name="sad"></ion-icon>
           <br>
           <button style="margin: auto" *ngIf="groups === [] || !groups" ion-button clear (click)="goToGroupsPage()">No purchases yet. Create a group first!</button>

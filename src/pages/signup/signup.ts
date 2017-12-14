@@ -63,11 +63,11 @@ export class SignupPage {
       });
       this.loading = this.loadingCtrl.create();
       this.loading.present();
-      let toast = this.toastCtrl.create({
-        message: "User created successfully",
-        duration: 3000
-      });
-      toast.present();
+      // let toast = this.toastCtrl.create({
+      //   message: "User created successfully",
+      //   duration: 3000
+      // });
+      // toast.present();
     }
   }
 }

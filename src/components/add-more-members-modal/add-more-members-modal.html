@@ -14,78 +14,43 @@
   <!-- <ion-toolbar>
       <ion-searchbar (ionInput)="getUsers($event)"></ion-searchbar>
   </ion-toolbar> -->
-    
+
 </ion-header>
 
 <ion-content padding>
 
-    <!-- <ion-list *ngFor="let displaySearchName of displaySearchNames">
-        <ion-card (click)="addMember(displaySearchName)">
-          <ion-card-header>
-            {{displaySearchName}}
-          </ion-card-header>
-        </ion-card>
-      </ion-list> -->
-
-      <!-- <ion-list *ngFor="let searchUser of searchUsers">
-          <ion-card (click)="addMember(searchUser)">
-            <ion-card-header>
-              {{searchUser?.displayName}}
-            </ion-card-header>
-          </ion-card>
-      </ion-list> -->
-
       <ion-list *ngIf="anyActiveUsers > 0">
-        <ion-list-header>
-          Active Settle-up Members
-        </ion-list-header>
-        <ion-item-group *ngFor="let nativeContact of nativeContacts">
+        <ion-list-header>Active Settle-up Members</ion-list-header>
+        <ion-item-group *ngFor="let group of groupedContacts">
+          <ion-item-divider *ngIf="group.activeUsers" light>{{group.letter}}</ion-item-divider>
+          <ng-container *ngFor="let nativeContact of group.contacts">
             <ng-container *ngIf="nativeContact?.activeUser">
-              <ion-item-divider light>{{nativeContact?.name.givenName.charAt(0)}}</ion-item-divider>
               <ion-item (click)="addMember(nativeContact)">
-                <!-- <ion-avatar item-start *ngIf="nativeContact.photos">
-                    <img src="{{nativeContact?.photos[0].value}}">
-                </ion-avatar> -->
-                <!-- <ion-avatar item-start *ngIf="!nativeContact.photos"> -->
-                    <!-- <ion-avatar item-start>                    
-                      <ngu-letter-avatar avatar-font-size="25px" avatar-shape="round" avatar-char-count="2" avatar-data='{{nativeContact?.name.givenName}} {{nativeContact?.name.familyName}}'></ngu-letter-avatar>              
-                    </ion-avatar> -->
-                <h2 *ngIf="nativeContact?.name.givenName">
-                  {{nativeContact?.name.givenName}} {{nativeContact?.name.familyName}}
-                </h2>
+                <h2 *ngIf="nativeContact?.name.givenName">{{nativeContact?.name.givenName}} {{nativeContact?.name.familyName}}</h2>
                 <h2 *ngIf="!nativeContact?.name.givenName && nativeContact?.emails[0].value">{{nativeContact?.emails[0].value}}</h2>
                 <ion-icon *ngIf="nativeContact?.selected" name="checkmark-circle" item-end></ion-icon>
               </ion-item>
+            </ng-container>
           </ng-container>
         </ion-item-group>
       </ion-list>
 
       <ion-list>
-          <ion-list-header *ngIf="anyActiveUsers > 0">
-            Other Contacts
-          </ion-list-header>
-          <ion-list-header *ngIf="anyActiveUsers === 0">
-            Contacts
-          </ion-list-header>
-          <ion-item-group *ngFor="let nativeContact of nativeContacts">
+        <ion-list-header *ngIf="anyActiveUsers > 0">Other Contacts</ion-list-header>
+        <ion-list-header *ngIf="anyActiveUsers === 0">Contacts</ion-list-header>
+        <ion-item-group *ngFor="let group of groupedContacts">
+          <ion-item-divider *ngIf="!group.onlyActiveUsers" light>{{group.letter}}</ion-item-divider>            
+          <ng-container *ngFor="let nativeContact of group.contacts">
             <ng-container *ngIf="!nativeContact?.activeUser">
-              <ion-item-divider light>{{nativeContact?.name.givenName.charAt(0)}}</ion-item-divider>
               <ion-item (click)="addMember(nativeContact)">
-                <!-- <ion-avatar item-start *ngIf="nativeContact.photos">
-                    <img src="{{nativeContact?.photos[0].value}}">
-                </ion-avatar> -->
-                <!-- <ion-avatar item-start *ngIf="!nativeContact.photos"> -->
-                <!-- <ion-avatar item-start>
-                    <ngu-letter-avatar avatar-font-size="25px" avatar-shape="round" avatar-char-count="2" avatar-data='{{nativeContact?.name.givenName}} {{nativeContact?.name.familyName}}'></ngu-letter-avatar>              
-                </ion-avatar> -->
-                <h2>
-                  {{nativeContact?.name.givenName}} {{nativeContact?.name.familyName}}
-                </h2>
+                <h2 *ngIf="nativeContact?.name.givenName">{{nativeContact?.name.givenName}} {{nativeContact?.name.familyName}}</h2>
+                <h2 *ngIf="!nativeContact?.name.givenName && nativeContact?.emails[0].value">{{nativeContact?.emails[0].value}}</h2>
                 <ion-icon *ngIf="nativeContact?.selected" name="checkmark-circle" item-end></ion-icon>
               </ion-item>
             </ng-container>
-          </ion-item-group>
-        </ion-list>
+          </ng-container>
+        </ion-item-group>
+      </ion-list>
 
   
   </ion-content>

@@ -23,15 +23,54 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+    <h1>Welcome {{currentUserInfo?.firstName}}!</h1>
+    <ion-row>
+      <ion-col>
+        <p>Your Friends Owe You:</p>
+        <div class="your-friends-owe-shape">
+            <div class="your-friends-owe-content">
+                <span>{{yourFriendsOwe | currency:'USD':"symbol":'1.2-2'}}</span>                  
+            </div>
+        </div>
+      </ion-col>
+      <ion-col>
+        <p>You Owe Your Friends:</p>
+          <div class="you-owe-shape">
+              <div class="you-owe-content">
+                  <span>{{youOwe | currency:'USD':"symbol":'1.2-2'}}</span>                  
+              </div>
+          </div>
+      </ion-col>
+    </ion-row>
 
-  <button ion-button (click)="logout()">Logout</button>
+    <h3>Your Connections</h3>    
+    <ion-list>
+        <ng-container *ngFor="let connection of connections">
+          <ion-item *ngIf="connection?.uid !== currentUID">
+  
+            <ion-avatar item-start *ngIf="connection?.photoURL">
+                <img src="{{connection?.photoURL}}">
+            </ion-avatar>
+            <ion-avatar item-start *ngIf="!connection?.photoURL">
+                <ngu-letter-avatar avatar-shape="round" avatar-char-count="2" avatar-data='{{connection?.displayName}}' ></ngu-letter-avatar>              
+            </ion-avatar>
+  
+            <h2>{{connection?.displayName}}</h2>
+  
+            <ion-row>
+                <ion-col>
+                  <div class="balances">
+                    <ion-icon *ngIf="connection?.balance?.value > 0" name="arrow-round-up"></ion-icon>
+                    <ion-icon *ngIf="connection?.balance?.value < 0" name="arrow-round-down"></ion-icon>
+                    <ion-icon *ngIf="connection?.balance?.value === 0" name="happy" isActive="false"></ion-icon>
+                    <span *ngIf="connection?.balance?.value > 0">Owes you {{connection?.balance?.value | currency:'USD':"symbol":'1.2-2'}}</span>
+                    <span *ngIf="connection?.balance?.value < 0">You owe {{connection?.balance?.value | currency:'USD':"symbol":'1.2-2'}}</span>
+                    <span *ngIf="connection?.balance?.value === 0">All Settled Up!</span>
+                  </div>
+                </ion-col>
+            </ion-row>
+          </ion-item>
+        </ng-container>
+      </ion-list>
+
 </ion-content>

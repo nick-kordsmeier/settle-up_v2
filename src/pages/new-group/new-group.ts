@@ -109,7 +109,8 @@ export class NewGroupPage {
             admin: true,
             photoURL: currentUserPhotoURL,
             groupID: 0,
-            email: this.currentUserInfo.email
+            email: this.currentUserInfo.email,
+            activeUser: true
           }
         ]
 
@@ -142,22 +143,22 @@ export class NewGroupPage {
                       console.log(this.groupMembers);
                       
             
-                    // Initialize the variables that will store who owes who what.
-                    console.log("Outer for loop starts")
-                    console.log(this.groupMembers.length);
-                    for (let i = 0; i < this.groupMembers.length; i++) {
-                      console.log("Inner for loop starts")
-                      console.log(this.groupMembers);
-                      for (let j = 0; j < this.groupMembers.length; j++) {
-                        console.log(this.groupMembers[i].groupID)
+                    // // Initialize the variables that will store who owes who what.
+                    // console.log("Outer for loop starts")
+                    // console.log(this.groupMembers.length);
+                    // for (let i = 0; i < this.groupMembers.length; i++) {
+                    //   console.log("Inner for loop starts")
+                    //   console.log(this.groupMembers);
+                    //   for (let j = 0; j < this.groupMembers.length; j++) {
+                    //     console.log(this.groupMembers[i].groupID)
             
-                        if (this.groupMembers[i].groupID !== j) {
-                          this.groupMembers[i][`${i}-${j}`] = 0;
-                        }
-                      }
-                    }
-                    console.log("this.groupMembers after loops = ");
-                    console.log(this.groupMembers);
+                    //     if (this.groupMembers[i].groupID !== j) {
+                    //       this.groupMembers[i][`${i}-${j}`] = 0;
+                    //     }
+                    //   }
+                    // }
+                    // console.log("this.groupMembers after loops = ");
+                    // console.log(this.groupMembers);
                     }).catch(err => { console.error(err) });;
                   }).catch(err => { console.error(err) });;
 
@@ -214,7 +215,8 @@ addToGroupMembersArray(selectedContact, selectedActiveUser) {
             admin: false,
             photoURL: selectedActiveUserPhotoURL,
             groupID: this.groupIDCounter,
-            email: selectedActiveUser.email
+            email: selectedActiveUser.email,
+            activeUser: true
           })
       
           console.log("groupMembers within if activeuser loop")
@@ -224,7 +226,8 @@ addToGroupMembersArray(selectedContact, selectedActiveUser) {
           groupMembers.push({
             displayName: selectedContact.name.givenName + " " + selectedContact.name.familyName,
             admin: false,
-            groupID: this.groupIDCounter
+            groupID: this.groupIDCounter,
+            activeUser: false
           })
           console.log("groupMembers within non-active contact if loop")
           console.log(groupMembers);      

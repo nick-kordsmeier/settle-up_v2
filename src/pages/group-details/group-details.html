@@ -46,12 +46,12 @@
           <ion-row>
               <ion-col>
                 <div class="balances">
-                  <ion-icon *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] < 0" name="arrow-round-up"></ion-icon>
-                  <ion-icon *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] > 0" name="arrow-round-down"></ion-icon>
-                  <ion-icon *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] === 0" name="happy" isActive="false"></ion-icon>
-                  <span *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] < 0">Owes you {{groupMember[groupMember.groupID + '-' + activeUserGroupID] * -1 | currency:'USD':"symbol":'1.2-2'}}</span>
-                  <span *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] > 0">You owe {{groupMember[groupMember.groupID + '-' + activeUserGroupID] * -1 | currency:'USD':"symbol":'1.2-2'}}</span>
-                  <span *ngIf="groupMember[groupMember.groupID + '-' + activeUserGroupID] === 0">All Settled Up!</span>
+                  <ion-icon *ngIf="groupMember[groupMember.uid + '-' + currentUID] < 0" name="arrow-round-up"></ion-icon>
+                  <ion-icon *ngIf="groupMember[groupMember.uid + '-' + currentUID] > 0" name="arrow-round-down"></ion-icon>
+                  <ion-icon *ngIf="groupMember[groupMember.uid + '-' + currentUID] === 0" name="happy" isActive="false"></ion-icon>
+                  <span *ngIf="groupMember[groupMember.uid + '-' + currentUID] < 0">Owes you {{groupMember[groupMember.uid + '-' + currentUID] * -1 | currency:'USD':"symbol":'1.2-2'}}</span>
+                  <span *ngIf="groupMember[groupMember.uid + '-' + currentUID] > 0">You owe {{groupMember[groupMember.uid + '-' + currentUID] * -1 | currency:'USD':"symbol":'1.2-2'}}</span>
+                  <span *ngIf="groupMember[groupMember.uid + '-' + currentUID] === 0">All Settled Up!</span>
                 </div>
               </ion-col>
           </ion-row>

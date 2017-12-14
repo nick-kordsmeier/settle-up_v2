@@ -18,7 +18,7 @@ export class PurchasesPage {
   activeGroups;
   groupsObj;
   groups;
-  purchases;
+  purchases = [];
   sortedPurchases;
 
   constructor(
@@ -73,6 +73,9 @@ export class PurchasesPage {
       console.log(this.sortedPurchases)
     }
     }).catch(err => { console.error(err) });
+
+    console.log("purchases:")
+    console.log(this.purchases);
 
 
   }

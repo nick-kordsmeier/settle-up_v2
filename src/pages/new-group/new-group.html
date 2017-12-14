@@ -14,7 +14,7 @@
 
 <ion-content padding>
     <form (ngSubmit)="onSaveNewGroup()">
-    <ion-item>
+    <ion-item class="required">
       <ion-label stacked>New Group Name</ion-label>
       <ion-input type="text" [(ngModel)]="newGroupName" name="newGroupName"></ion-input>      
     </ion-item>

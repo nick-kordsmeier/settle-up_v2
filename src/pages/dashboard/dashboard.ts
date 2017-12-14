@@ -15,6 +15,9 @@ import { PopoverMenuComponent } from '../../components/popover-menu/popover-menu
 export class DashboardPage {
   currentUID;
   currentUserInfo;
+  connections = [];
+  youOwe = 0;
+  yourFriendsOwe = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -32,19 +35,25 @@ export class DashboardPage {
     this.settleUpProvider.getUserData(this.currentUID).then(uidData => {
       this.currentUserInfo = uidData;
       console.log(this.currentUserInfo)
+      
+      this.connections = []
+      let connectionKeys = Object.keys(this.currentUserInfo.connections);
+      for (let i = 0; i < connectionKeys.length; i++) {
+        this.connections.push(this.currentUserInfo.connections[`${connectionKeys[i]}`]);
+      }
+      console.log(this.connections);
+
+      this.youOwe = 0;
+      this.yourFriendsOwe = 0;
+      for (let i = 0; i < this.connections.length; i++) {
+        if (this.connections[i].balance.value < 0) {
+          this.youOwe -= this.connections[i].balance.value;
+        } else if (this.connections[i].balance.value > 0) {
+          this.yourFriendsOwe += this.connections[i].balance.value;
+        }
+      }
     }).catch(err => { console.error(err) });;
 
-    // this.groups = [];
-    // this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
-    //   if (activeUserGroupsData !== null) { 
-    //   this.groupsObj = activeUserGroupsData;
-    //   let groupKeys = Object.keys(this.groupsObj);
-    //   for (let i = 0; i < groupKeys.length; i++) {
-    //     this.groups.push(this.groupsObj[groupKeys[i]]);
-    //   }
-    //   console.log(this.groups);
-    // }
-    // });
   }
 
   logout() {
