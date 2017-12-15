@@ -60,7 +60,19 @@ page-dashboard {
           text-align: center;
       }
       
-      .your-friends-owe-col {
+      .your-friends-owe-left-col {
           border-right: 1px solid lightgrey;
+          border-bottom: 1px solid lightgrey;
       }
+
+      .your-friends-owe-right-col {
+        border-bottom: 1px solid lightgrey;
+    }
+
+      .no-groups {
+        text-align: center;
+        ion-icon {
+            font-size: 100px;
+        }
+    }
 }

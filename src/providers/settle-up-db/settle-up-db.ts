@@ -100,64 +100,67 @@ export class SettleUpDbProvider {
 
   }
 
-  updateBalances(groupKey, updatedGroupMembers, purchasePrice, numMembers, currentUID) {
-    console.log("updateBalances");
-    this.afDatabase.object("/Groups/" + groupKey + "/members").set(updatedGroupMembers);
-    console.log(updatedGroupMembers);
-    
-    for (let i = 0; i < numMembers; i ++) {
-      for (let j = 0; j < numMembers; j++) {
-        if (updatedGroupMembers[i].uid === currentUID) {
-          if (updatedGroupMembers[i].uid !== updatedGroupMembers[j].uid) {
-            if (updatedGroupMembers[i].activeUser) {
-              this.getCurrentUIDConnectionBalance(true, updatedGroupMembers[i].uid, updatedGroupMembers[j].uid).then( data => {
-                let currentBalanceObj = data
-                let currentBalance = currentBalanceObj["value"];
-                console.log(currentBalanceObj);
-                console.log(currentBalanceObj["value"]);
-                console.log("update balance");
-                currentBalance += purchasePrice / numMembers;
-                this.afDatabase.object("/userProfile/" + updatedGroupMembers[i].uid + "/connections/" + updatedGroupMembers[j].uid + "/balance").set({value: currentBalance});
-              });
-            } else {
-              this.getCurrentUIDConnectionBalance(false, updatedGroupMembers[i].uid, updatedGroupMembers[j].uid).then( data => {
-                let currentBalanceObj = data
-                let currentBalance = currentBalanceObj["value"];
-                console.log(currentBalanceObj);
-                console.log(currentBalanceObj["value"]);
-                console.log("update balance");
-                currentBalance += purchasePrice / numMembers;
-                this.afDatabase.object("/inactiveUsers/" + updatedGroupMembers[i].uid + "/connections/" + updatedGroupMembers[j].uid + "/balance").set({value: currentBalance});
-              });
+  updateBalances(groupKey, updatedGroupMembers, purchasePrice, numMembers, currentUID) { 
+
+      console.log("updateBalances");
+      this.afDatabase.object("/Groups/" + groupKey + "/members").set(updatedGroupMembers).then( () => {
+        console.log(updatedGroupMembers);
+        
+        for (let i = 0; i < numMembers; i ++) {
+          console.log(numMembers);
+          for (let j = 0; j < numMembers; j++) {
+            if (updatedGroupMembers[i].uid === currentUID) {
+              if (updatedGroupMembers[i].uid !== updatedGroupMembers[j].uid) {
+                if (updatedGroupMembers[i].activeUser) {
+                  this.getCurrentUIDConnectionBalance(true, updatedGroupMembers[i].uid, updatedGroupMembers[j].uid).then( data => {
+                    let currentBalanceObj = data
+                    let currentBalance = currentBalanceObj["value"];
+                    console.log(currentBalanceObj);
+                    console.log(currentBalanceObj["value"]);
+                    console.log("update balance");
+                    currentBalance += purchasePrice / numMembers;
+                    this.afDatabase.object("/userProfile/" + updatedGroupMembers[i].uid + "/connections/" + updatedGroupMembers[j].uid + "/balance").set({value: currentBalance});
+                  });
+                } else {
+                  this.getCurrentUIDConnectionBalance(false, updatedGroupMembers[i].uid, updatedGroupMembers[j].uid).then( data => {
+                    let currentBalanceObj = data
+                    let currentBalance = currentBalanceObj["value"];
+                    console.log(currentBalanceObj);
+                    console.log(currentBalanceObj["value"]);
+                    console.log("update balance");
+                    currentBalance += purchasePrice / numMembers;
+                    this.afDatabase.object("/inactiveUsers/" + updatedGroupMembers[i].uid + "/connections/" + updatedGroupMembers[j].uid + "/balance").set({value: currentBalance});
+                  });
+                }
+              }
             }
           }
+          if (updatedGroupMembers[i].uid !== currentUID) {
+            if (updatedGroupMembers[i].activeUser) {
+              this.getCurrentUIDConnectionBalance(true, updatedGroupMembers[i].uid, currentUID).then( data => {
+                let currentBalanceObj = data
+                let currentBalance = currentBalanceObj["value"];
+                console.log(currentBalanceObj);
+                console.log(currentBalanceObj["value"]);
+                console.log("update balance");
+                currentBalance -= purchasePrice / numMembers;
+                this.afDatabase.object("/userProfile/" + updatedGroupMembers[i].uid + "/connections/" + currentUID + "/balance").set({value: currentBalance});
+              });
+            } else {
+              this.getCurrentUIDConnectionBalance(false, updatedGroupMembers[i].uid, currentUID).then( data => {
+                let currentBalanceObj = data
+                let currentBalance = currentBalanceObj["value"];
+                console.log(currentBalanceObj);
+                console.log(currentBalanceObj["value"]);
+                console.log("update balance");
+                currentBalance -= purchasePrice / numMembers;
+                this.afDatabase.object("/inactiveUsers/" + updatedGroupMembers[i].uid + "/connections/" + currentUID + "/balance").set({value: currentBalance});
+              });
+            }
+            console.log("If subtracting");
+          }
         }
-      }
-      if (updatedGroupMembers[i].uid !== currentUID) {
-        if (updatedGroupMembers[i].activeUser) {
-          this.getCurrentUIDConnectionBalance(true, updatedGroupMembers[i].uid, currentUID).then( data => {
-            let currentBalanceObj = data
-            let currentBalance = currentBalanceObj["value"];
-            console.log(currentBalanceObj);
-            console.log(currentBalanceObj["value"]);
-            console.log("update balance");
-            currentBalance -= purchasePrice / numMembers;
-            this.afDatabase.object("/userProfile/" + updatedGroupMembers[i].uid + "/connections/" + currentUID + "/balance").set({value: currentBalance});
-          });
-        } else {
-          this.getCurrentUIDConnectionBalance(false, updatedGroupMembers[i].uid, currentUID).then( data => {
-            let currentBalanceObj = data
-            let currentBalance = currentBalanceObj["value"];
-            console.log(currentBalanceObj);
-            console.log(currentBalanceObj["value"]);
-            console.log("update balance");
-            currentBalance -= purchasePrice / numMembers;
-            this.afDatabase.object("/inactiveUsers/" + updatedGroupMembers[i].uid + "/connections/" + currentUID + "/balance").set({value: currentBalance});
-          });
-        }
-        console.log("If subtracting");
-      }
-    }
+      });
   }
 
   checkConnectionStatus(active, testUID, compareUID) {
@@ -206,6 +209,20 @@ export class SettleUpDbProvider {
   // });
   // }
 
+  deletePurchase(purchase) {
+    let groupData;
+    let existingNumPurchases;
+    let newMostRecentPurchase;
+    this.getGroupDetails(purchase.groupKey).then( data => {
+      groupData = data;
+      console.log(groupData);
+      existingNumPurchases = groupData.numPurchases
+      existingNumPurchases--;
+      this.afDatabase.object("/Groups/" + purchase.groupKey + "/numPurchases").set(existingNumPurchases);
+      this.afDatabase.object("/Groups/" + purchase.groupKey + "/purchases/" + purchase.key).remove();
+        this.afDatabase.object("/Groups/" + purchase.groupKey + "/mostRecentPurchase").remove();
+    });
+  };
 
   getUserData(uid) {
     return new Promise (resolve => {this.afDatabase.object("/userProfile/" + uid).valueChanges().subscribe(data => {
@@ -222,4 +239,36 @@ getActiveUserGroup(uid) {
 
 }
 
+editPurchase(editedPurchaseObject) {
+  console.log(editedPurchaseObject);
+  this.afDatabase.object("/Groups/" + editedPurchaseObject.groupKey + "/purchases/" + editedPurchaseObject.key).set(editedPurchaseObject);
 }
+
+}
+
+
+
+
+
+
+
+
+
+
+// let purchaseKeys = Object.keys(groupData.purchases);
+// console.log("groupData.purchase")
+// console.log(groupData.purchases);
+// let pKLength = purchaseKeys.length;
+// if (pKLength > 0) {
+//   let sortedPurchaseKeys = purchaseKeys.sort();
+//   console.log("pKLength");        
+//   console.log(pKLength);
+//   let newMostRecentKey = sortedPurchaseKeys[pKLength-1];
+//   console.log("newMostRecentKey")        
+//   console.log(newMostRecentKey)
+//   console.log("groupData.purchases[`${newMostRecentKey}`]")        
+//   console.log(groupData.purchases[`${newMostRecentKey}`])
+//   this.afDatabase.object("/Groups/" + purchase.groupKey + "/mostRecentPurchase").set(groupData.purchases[`${newMostRecentKey}`]);
+// } else {
+//   this.afDatabase.object("/Groups/" + purchase.groupKey + "/mostRecentPurchase").remove();     
+// }

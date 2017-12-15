@@ -4,7 +4,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
 import { AuthProvider } from '../../providers/auth/auth';
 
-// @IonicPage()
 @Component({
   selector: 'page-new-purchase',
   templateUrl: 'new-purchase.html',
@@ -16,6 +15,7 @@ export class NewPurchasePage {
   currentUserInfo;
   groupsObj;  
   groups = [];
+  groupKeys;
 
   groupVal;
   itemVal;
@@ -47,7 +47,39 @@ export class NewPurchasePage {
       this.currentUserInfo = uidData;
     });
 
-    this.settleUpProvider.getGroupDetails(this.navParams.get("key")).then( groupDetailData => {
+    if(this.navParams.get("key")) {
+      this.settleUpProvider.getGroupDetails(this.navParams.get("key")).then( groupDetailData => {
+        this.groupDetails = groupDetailData;
+        this.groupMembers = this.groupDetails.members;
+        this.groupVal = this.groupDetails.groupName;
+        console.log("group details")
+        console.log(this.groupDetails);
+  
+        if (this.groupDetails.numPurchases) {
+          this.numPurchases = this.groupDetails.numPurchases; 
+        } else this.numPurchases = 0;
+      }).catch(err => { console.error(err) });  
+    }
+
+        
+    this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
+      this.groupsObj = activeUserGroupsData;
+      this.groupKeys = Object.keys(this.groupsObj);
+      this.groups = [];
+      for (let i = 0; i < this.groupKeys.length; i++) {
+        this.groups.push(this.groupsObj[this.groupKeys[i]]);
+      }
+      console.log(this.groups);
+
+    }).catch(err => { console.error(err) });
+  }
+
+  onSaveNewPurchase() {
+
+    let groupIndex = this.groups.findIndex(element => element["groupName"] === this.groupVal);
+    console.log(groupIndex);
+    console.log(this.groups[groupIndex]);
+    this.settleUpProvider.getGroupDetails(this.groups[groupIndex].key).then( groupDetailData => {
       this.groupDetails = groupDetailData;
       this.groupMembers = this.groupDetails.members;
       this.groupVal = this.groupDetails.groupName;
@@ -57,41 +89,28 @@ export class NewPurchasePage {
       if (this.groupDetails.numPurchases) {
         this.numPurchases = this.groupDetails.numPurchases; 
       } else this.numPurchases = 0;
-    }).catch(err => { console.error(err) });
 
-        
-    this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
-      this.groupsObj = activeUserGroupsData;
-      let groupKeys = Object.keys(this.groupsObj);
-      this.groups = [];
-      for (let i = 0; i < groupKeys.length; i++) {
-        this.groups.push(this.groupsObj[groupKeys[i]]);
+      const today = new Date();
+      console.log(today);
+      const newPurchaseObj = {
+        item: this.itemVal,
+        purchaseDescription: this.descriptionVal,
+        price: this.priceVal,
+        forWho: this.forWhoVal,
+        occasion: this.occasionVal,
+        boughtFrom: this.boughtFromVal,
+        datePurchased: this.datePurchasedVal,
+        dateAddedNum: today.getTime(),
+        addedByUID: this.currentUID,
+        addedByName: this.currentUserInfo.displayName,
+        groupName: this.groupVal,
+        groupKey: this.groupDetails.key
       }
-      console.log(this.groups);
+      this.numPurchases++
+      this.saveNewPurchase(this.groupDetails.key, newPurchaseObj, this.numPurchases, this.currentUID, this.groupMembers);
+    }).catch(err => { console.error(err) });  
+    
 
-    }).catch(err => { console.error(err) });
-  }
-
-  onSaveNewPurchase() {
-    const today = new Date();
-    console.log(today);
-    const newPurchaseObj = {
-      item: this.itemVal,
-      purchaseDescription: this.descriptionVal,
-      price: this.priceVal,
-      forWho: this.forWhoVal,
-      occasion: this.occasionVal,
-      boughtFrom: this.boughtFromVal,
-      datePurchased: this.datePurchasedVal,
-      dateAddedNum: today.getTime(),
-      dateAdded: new Date(),
-      addedByUID: this.currentUID,
-      addedByName: this.currentUserInfo.displayName,
-      groupName: this.groupVal,
-      groupKey: this.groupDetails.key
-    }
-    this.numPurchases++
-    this.saveNewPurchase(this.groupDetails.key, newPurchaseObj, this.numPurchases, this.currentUID, this.groupMembers);
   }
 
   saveNewPurchase(groupKey, newPurchaseObj, numPurchases, uid, groupMembers) {

@@ -1,0 +1,48 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Edit Purchase</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <h2>Edit Purchase Details</h2>
+    <ion-item class="required">
+        <div class="label">Group:</div>
+        <div class="value">{{purchase?.groupName}}</div>
+    </ion-item>
+    <ion-item class="required">
+      <div class="label">Item:</div>
+      <div class="value">{{purchase?.item}}</div>
+    </ion-item>
+    <ion-item class="required">
+      <div class="label">Price:</div>
+      <div class="value">{{purchase?.price | currency:'USD':"symbol":'1.2-2'}}</div>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>Description:</ion-label>
+        <ion-textarea type="text" [(ngModel)]="descriptionVal" name="descriptionVal"></ion-textarea>      
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>For whom?</ion-label>
+        <ion-input type="text" [(ngModel)]="forWhoVal" name="forWhoVal"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>Occasion</ion-label>
+        <ion-input type="text" [(ngModel)]="occasionVal" name="occasionVal"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked>Date Purchased</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" max="2040" min="2000" [(ngModel)]="datePurchasedVal" name="datePurchasedVal"></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>Bought From</ion-label>
+        <ion-input type="text" [(ngModel)]="boughtFromVal" name="boughtFromVal"></ion-input>
+    </ion-item>
+      <button class="submit-button" ion-button type="submit" (click)="onSubmitEdits()">Submit</button>
+      <button class="delete-button" ion-button color="danger" (click)="onDelete()">Delete</button>
+    
+
+</ion-content>

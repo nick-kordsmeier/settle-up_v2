@@ -29,6 +29,8 @@ export class DashboardPage {
 
   ionViewWillEnter() {
     this.currentUID = this.authProvider.getUID();
+    this.youOwe = 0;
+    this.yourFriendsOwe = 0;
   }
 
   ionViewDidEnter() {
@@ -52,7 +54,7 @@ export class DashboardPage {
           this.yourFriendsOwe += this.connections[i].balance.value;
         }
       }
-    }).catch(err => { console.error(err) });;
+    }).catch(err => { console.error(err) });
 
   }
 
@@ -65,5 +67,9 @@ export class DashboardPage {
     let popover = this.popoverCtrl.create(PopoverMenuComponent, {currentUserInfo: currentUserInfo}, {cssClass: "popover-menu"});
 
     popover.present({ev: ev});
+  }
+
+  goToGroupsPage() {
+    this.navCtrl.parent.select(1);
   }
 }

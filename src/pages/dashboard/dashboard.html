@@ -27,7 +27,7 @@
     <h1>Welcome {{currentUserInfo?.firstName}}!</h1>
   </ion-item>
     <ion-row>
-      <ion-col class="your-friends-owe-col">
+      <ion-col class="your-friends-owe-left-col">
         <p class="owe-text">Your friends owe you:</p>
         <div class="your-friends-owe-shape">
             <div class="your-friends-owe-content">
@@ -35,7 +35,7 @@
             </div>
         </div>
       </ion-col>
-      <ion-col>
+      <ion-col class="your-friends-owe-right-col">
         <p class="owe-text">You owe your friends:</p>
           <div class="you-owe-shape">
               <div class="you-owe-content">
@@ -45,7 +45,7 @@
       </ion-col>
     </ion-row>
 
-    <h3>Your Connections</h3>    
+    <h3 *ngIf="connections.length !== 0">Your Connections</h3>    
     <ion-list>
         <ng-container *ngFor="let connection of connections">
           <ion-item *ngIf="connection?.uid !== currentUID">
@@ -74,5 +74,11 @@
           </ion-item>
         </ng-container>
       </ion-list>
+
+      <div class="no-groups" *ngIf="connections.length === 0 || !connections">
+          <ion-icon  isActive="false" name="sad"></ion-icon>
+          <br>
+          <button ion-button clear (click)="goToGroupsPage()">No connections yet. Create a group!</button>
+        </div>
 
 </ion-content>
