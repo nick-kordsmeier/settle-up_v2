@@ -109,8 +109,6 @@ export class SettleUpDbProvider {
       for (let j = 0; j < numMembers; j++) {
         if (updatedGroupMembers[i].uid === currentUID) {
           if (updatedGroupMembers[i].uid !== updatedGroupMembers[j].uid) {
-            // console.log("Before")
-            // console.log(updatedGroupMembers[i][`${updatedGroupMembers[i].uid}-${updatedGroupMembers[j].uid}`]);
             if (updatedGroupMembers[i].activeUser) {
               this.getCurrentUIDConnectionBalance(true, updatedGroupMembers[i].uid, updatedGroupMembers[j].uid).then( data => {
                 let currentBalanceObj = data
@@ -132,9 +130,6 @@ export class SettleUpDbProvider {
                 this.afDatabase.object("/inactiveUsers/" + updatedGroupMembers[i].uid + "/connections/" + updatedGroupMembers[j].uid + "/balance").set({value: currentBalance});
               });
             }
-            // updatedGroupMembers[i][`${updatedGroupMembers[i].uid}-${updatedGroupMembers[j].uid}`] += (purchasePrice/numMembers)
-            // console.log("After")
-            // console.log(updatedGroupMembers[i][`${updatedGroupMembers[i].uid}-${updatedGroupMembers[j].uid}`]);
           }
         }
       }
@@ -160,15 +155,9 @@ export class SettleUpDbProvider {
             this.afDatabase.object("/inactiveUsers/" + updatedGroupMembers[i].uid + "/connections/" + currentUID + "/balance").set({value: currentBalance});
           });
         }
-        // updatedGroupMembers[i][`${updatedGroupMembers[i].uid}-${currentUID}`] -= (purchasePrice/numMembers)
         console.log("If subtracting");
-        // console.log(updatedGroupMembers[i][`${updatedGroupMembers[i].uid}-${currentUID}`]);
       }
     }
-
-
-
-
   }
 
   checkConnectionStatus(active, testUID, compareUID) {

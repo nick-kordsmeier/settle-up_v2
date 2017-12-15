@@ -75,24 +75,8 @@ export class GroupDetailsPage {
     }).catch(err => { console.error(err) });
   }
 
-  // switchToPurchasesTab() {
-  //   return new Promise (resolve => {
-  //     resolve(this.navCtrl.parent.select(2));
-  // });
-  // }
-
   goToNewPurchase(key) {
-    // this.navCtrl.parent.select(2);
     this.navCtrl.push(NewPurchasePage, {key: key});
-
-    
-
-  //   this.switchToPurchasesTab().then( () => {
-  //     this.navCtrl.parent.select(2)
-  //     this.navCtrl.push(NewPurchasePage, {key: key});      
-  //   });
-  //   // this.navCtrl.parent.select(2).push(NewPurchasePage, {key: key});
-  // }
   }
 
   goToPurchaseDetails(purchase) {

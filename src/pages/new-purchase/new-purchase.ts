@@ -99,8 +99,6 @@ export class NewPurchasePage {
     this.navCtrl.pop();
 
     // Update each group members' balances.
-    // let purchaserIndex = groupMembers.findIndex(element => element["uid"] === uid);
-    // console.log(purchaserIndex);
     let purchasePrice = newPurchaseObj.price;
     console.log(purchasePrice);
     let numMembers = this.groupMembers.length;
@@ -132,9 +130,5 @@ export class NewPurchasePage {
   updateBalances(groupDetailsKey, groupMembers, purchasePrice, numMembers, currentUID) {
     this.settleUpProvider.updateBalances(groupDetailsKey, groupMembers, purchasePrice, numMembers, currentUID);
   }
-
-
-
-
 }
 

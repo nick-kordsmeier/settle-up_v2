@@ -140,60 +140,9 @@ export class NewGroupPage {
                       this.groupMembers.push(MemberData[0]);
             
                       console.log("this.groupMembers after push = ");
-                      console.log(this.groupMembers);
-                      
-            
-                    // // Initialize the variables that will store who owes who what.
-                    // console.log("Outer for loop starts")
-                    // console.log(this.groupMembers.length);
-                    // for (let i = 0; i < this.groupMembers.length; i++) {
-                    //   console.log("Inner for loop starts")
-                    //   console.log(this.groupMembers);
-                    //   for (let j = 0; j < this.groupMembers.length; j++) {
-                    //     console.log(this.groupMembers[i].groupID)
-            
-                    //     if (this.groupMembers[i].groupID !== j) {
-                    //       this.groupMembers[i][`${i}-${j}`] = 0;
-                    //     }
-                    //   }
-                    // }
-                    // console.log("this.groupMembers after loops = ");
-                    // console.log(this.groupMembers);
+                      console.log(this.groupMembers);                      
                     }).catch(err => { console.error(err) });;
                   }).catch(err => { console.error(err) });;
-
-
-
-        // for (let i = 0; i < selectedContacts.length; i++) {
-        //   if (selectedContacts[i].activeUser) {
-        //     let selectedActiveUser;
-        //     this.settleUpProvider.getUserData(selectedContacts[i].uid).then( data => {              
-        //       selectedActiveUser = data;
-        //       console.log(selectedActiveUser);
-
-        //     this.groupMembers[i+1] = {
-        //       displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
-        //       uid: selectedContacts[i].uid,
-        //       admin: false,
-        //       photoURL: selectedActiveUser.photoURL,
-        //       groupID: i + 1
-        //     }
-        //     });            
-
-        //   } else {
-        //     this.groupMembers[i+1] = {
-        //       displayName: selectedContacts[i].name.givenName + " " + selectedContacts[i].name.familyName,
-        //       admin: false,
-        //       groupID: i + 1
-        //     }
-        //   }
-        //   console.log(this.groupMembers);
-        // }
-
-
-
-        
-        // console.log(this.moreMembers);
       }
     }
     });    

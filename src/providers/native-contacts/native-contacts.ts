@@ -3,7 +3,6 @@ import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/cont
 
 @Injectable()
 export class NativeContactsProvider {
-  //nativeContactsList: Array<Contact>;
   nativeContactsList;
 
   constructor(private contacts: Contacts) {

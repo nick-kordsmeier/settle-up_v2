@@ -107,17 +107,4 @@ export class PurchasesPage {
   goToGroupsPage() {
     this.navCtrl.parent.select(1);
   }
-
 }
-
-    // this.groups = [];
-    // this.settleUpProvider.getActiveUserGroup(this.currentUID).then(activeUserGroupsData => {
-    //   if (activeUserGroupsData !== null) { 
-    //   this.groupsObj = activeUserGroupsData;
-    //   let groupKeys = Object.keys(this.groupsObj);
-    //   for (let i = 0; i < groupKeys.length; i++) {
-    //     this.groups.push(this.groupsObj[groupKeys[i]]);
-    //   }
-    //   console.log(this.groups);
-    // }
-    // });

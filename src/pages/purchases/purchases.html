@@ -34,7 +34,7 @@
   <h1 *ngIf="purchases.length > 0 && purchases">Your Purchases</h1>
 
     <ion-list *ngIf="purchases.length > 0 && purchases">
-        <button ion-item *ngFor="let purchase of purchases" (click)="goToPurchaseDetails(purchase)"> <!--FIX-->
+        <button ion-item *ngFor="let purchase of sortedPurchases" (click)="goToPurchaseDetails(purchase)"> <!--FIX-->
           <ion-avatar>
             <div class="purchase-price-shape">
               <div class="purchase-price-content">
@@ -44,34 +44,8 @@
           </ion-avatar>
           <h1>{{purchase?.item}}</h1>
           <p>{{purchase?.groupName}}</p>
+          <p>Purchased by {{purchase?.addedByName}}</p>
 
-          <!-- <ion-row>
-              <ion-col class="group-member-info">
-                <div>
-                  <ion-icon name="people" style="font-size:25px"></ion-icon>
-                  <ion-badge>{{group?.members?.length}}</ion-badge>
-                  <ion-note>members</ion-note>
-                </div>
-              </ion-col>
-    
-              <ion-col class="group-purchases-info">
-                <div>
-                  <ion-icon name="pricetag"></ion-icon>
-                  <ion-badge>{{group?.numPurchases}}</ion-badge>
-                  <ion-note>purchases</ion-note>
-                </div>
-              </ion-col>
-          </ion-row> -->
-          <!-- <div *ngIf="group.mostRecentPurchase" class="recent">
-            <ion-note>Recent </ion-note>
-            {{group?.mostRecentPurchase?.item}} for {{group?.mostRecentPurchase?.price | currency:'USD':"symbol":'1.2-2' }}
-          </div>
-    
-          <div *ngIf="!group.mostRecentPurchase" class="recent">
-              <ion-note>No purchases yet. Add a purchase now!</ion-note>          
-          </div> -->
-    
-    
         </button>
       </ion-list>
 

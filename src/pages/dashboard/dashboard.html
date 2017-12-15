@@ -23,10 +23,12 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-item>
     <h1>Welcome {{currentUserInfo?.firstName}}!</h1>
+  </ion-item>
     <ion-row>
-      <ion-col>
-        <p>Your Friends Owe You:</p>
+      <ion-col class="your-friends-owe-col">
+        <p class="owe-text">Your friends owe you:</p>
         <div class="your-friends-owe-shape">
             <div class="your-friends-owe-content">
                 <span>{{yourFriendsOwe | currency:'USD':"symbol":'1.2-2'}}</span>                  
@@ -34,7 +36,7 @@
         </div>
       </ion-col>
       <ion-col>
-        <p>You Owe Your Friends:</p>
+        <p class="owe-text">You owe your friends:</p>
           <div class="you-owe-shape">
               <div class="you-owe-content">
                   <span>{{youOwe | currency:'USD':"symbol":'1.2-2'}}</span>                  

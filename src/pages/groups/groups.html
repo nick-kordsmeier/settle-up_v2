@@ -53,7 +53,7 @@
       </ion-row>
       <div *ngIf="group.mostRecentPurchase">
         <ion-note class="recent-note">Recent</ion-note>
-        <div class="recent">{{group?.mostRecentPurchase?.item}}</div><div>for {{group?.mostRecentPurchase?.price | currency:'USD':"symbol":'1.2-2' }}</div>
+        <div class="recent">{{group?.mostRecentPurchase?.item}}</div><div class="recent">for {{group?.mostRecentPurchase?.price | currency:'USD':"symbol":'1.2-2' }}</div>
       </div>
       <div *ngIf="!group.mostRecentPurchase" class="no-purchases">
           <ion-note>No purchases yet. Add a purchase now!</ion-note>          
@@ -67,40 +67,3 @@
   <button ion-button clear (click)="goToNewGroup()">No groups yet. Create one now!</button>
 </div>
 </ion-content>
-
-
-        <!-- <ion-grid>
-          <ion-row>
-            <ion-col col-3>
-              <ion-avatar item-start *ngIf="group?.members[0].photoURL">
-                  <img src="{{group?.members[0].photoURL}}">
-              </ion-avatar>
-              <ion-avatar item-start *ngIf="!group?.members[0].photoURL">
-                  <ngu-letter-avatar avatar-shape="round" avatar-data='{{group?.members[0].displayName}}' ></ngu-letter-avatar>              
-              </ion-avatar>
-            </ion-col>
-
-            <ion-col col-3>
-            <ng-container *ngIf="group?.members[1]">
-              <ion-avatar item-start *ngIf="group?.members[1].photoURL">
-                  <img src="{{group?.members[1].photoURL}}">
-              </ion-avatar>
-              <ion-avatar item-start *ngIf="!group?.members[1].photoURL">
-                  <ngu-letter-avatar avatar-shape="round" avatar-data='{{group?.members[1].displayName}}'></ngu-letter-avatar>              
-              </ion-avatar>
-            </ng-container>
-          </ion-col>
-
-            <ion-col col-3>
-            <ng-container *ngIf="group?.members[2]">
-              <ion-avatar item-start *ngIf="group?.members[2].photoURL">
-                  <img src="{{group?.members[2].photoURL}}">
-              </ion-avatar>
-              <ion-avatar item-start *ngIf="!group?.members[2].photoURL">
-                  <ngu-letter-avatar avatar-shape="round" avatar-data='{{group?.members[2].displayName}}'></ngu-letter-avatar>              
-              </ion-avatar>
-            </ng-container>
-          </ion-col>
-
-        </ion-row>
-      </ion-grid> -->

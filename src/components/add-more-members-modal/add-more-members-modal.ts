@@ -4,13 +4,6 @@ import { ViewController, NavParams } from 'ionic-angular';
 import { SettleUpDbProvider } from '../../providers/settle-up-db/settle-up-db';
 import { NativeContactsProvider } from '../../providers/native-contacts/native-contacts';
 
-// function searchArray (searchValue, searchProperty, searchArray) {
-//   for (let i = 0; i < searchArray.length; i++) {
-//     if (searchArray[i][searchProperty] === searchValue) return i;
-//   }
-// }
-
-
 @Component({
   selector: 'add-more-members-modal',
   templateUrl: 'add-more-members-modal.html'
@@ -23,7 +16,6 @@ deSelectedContacts = [];
 nativeContacts;
 numberSelected = 0;
 anyActiveUsers;
-// rawNativeContacts = [];
 groupedContacts = [];
 sortedNativeContacts;
 

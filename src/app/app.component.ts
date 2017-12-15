@@ -69,13 +69,4 @@ export class MyApp {
       }
     });
   }
-
-
  }
-  
-  // logoutUser() {
-  //   this.authProvider.logoutUser();
-  //   this.rootPage = 'login';    
-  //   //this.nav.setRoot(LoginPage);
-  // }
-

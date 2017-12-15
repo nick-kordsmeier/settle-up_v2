@@ -2,6 +2,7 @@ page-groups {
 
     ion-note {
         font-size: 0.75em;
+        padding: 3px 0px 0px 0px;
     }
     .recent-note {
         margin: 5px 5px 0px 0px;
@@ -40,7 +41,7 @@ page-groups {
 
     .logo {
         padding: 15px 10px 10px;
-        width: 60%
+        width: 120px;
     }
 
     .no-groups {
@@ -56,7 +57,7 @@ page-groups {
         white-space: nowrap;
         max-width: 50%;
         float: left;
-        margin: 0px 5px 0px 0px;
+        margin: 5px 5px 0px 0px;
 
     }
 

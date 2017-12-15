@@ -66,7 +66,4 @@ export class DashboardPage {
 
     popover.present({ev: ev});
   }
-
-
-
 }
