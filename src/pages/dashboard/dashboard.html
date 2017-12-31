@@ -4,7 +4,7 @@
           <button ion-button icon-only (click)="presentPopover($event, currentUserInfo)">
             <ng-container *ngIf="currentUserInfo">
             <ion-avatar *ngIf="currentUserInfo?.photoURL">
-                <img style="width: 30% !important; height: 30% !important;" src="{{currentUserInfo?.photoURL}}">
+                <img style="width: 35px !important;" src="{{currentUserInfo?.photoURL}}">
             </ion-avatar>
             <ion-avatar *ngIf="!currentUserInfo?.photoURL">
               <div style="width: 65% !important; height: 65% !important;">
